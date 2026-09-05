@@ -188,7 +188,7 @@ mvn clean install
 
 # News and noteworthy
 
-v1.0.0 - work in progress
+v1.0.0 - 2026-09-05
 * Initial version
 * Contains `EEN16931Edition` with the BT-24 based edition detection for UBL and CII
 * Contains `CEN16931Syntax`, `EEN16931SyntaxKind` and `EEN16931DocumentType`
