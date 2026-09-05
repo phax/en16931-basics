@@ -62,6 +62,58 @@ public final class EEN16931EditionTest
   }
 
   @Test
+  public void testDocumentType ()
+  {
+    // Every edition prescribes a document type for every syntax kind
+    for (final EEN16931Edition e : EEN16931Edition.values ())
+      for (final EEN16931SyntaxKind eSyntaxKind : EEN16931SyntaxKind.values ())
+      {
+        final EEN16931DocumentType eDocType = e.getDocumentType (eSyntaxKind);
+        assertNotNull (eDocType);
+        assertSame (eSyntaxKind, eDocType.getSyntaxKind ());
+        assertSame (e, eDocType.getEdition ());
+      }
+
+    // EN 16931:2017 is CII D16B and UBL 2.1
+    assertSame (EEN16931DocumentType.CII_D16B, EEN16931Edition.EN2017.getDocumentType (EEN16931SyntaxKind.CII));
+    assertSame (EEN16931DocumentType.UBL21_INVOICE,
+                EEN16931Edition.EN2017.getDocumentType (EEN16931SyntaxKind.UBL_INVOICE));
+    assertSame (EEN16931DocumentType.UBL21_CREDIT_NOTE,
+                EEN16931Edition.EN2017.getDocumentType (EEN16931SyntaxKind.UBL_CREDIT_NOTE));
+    assertEquals ("D16B", EEN16931Edition.EN2017.getCIISyntaxVersion ());
+    assertEquals ("2.1", EEN16931Edition.EN2017.getUBLSyntaxVersion ());
+
+    // EN 16931:2026 is CII D25A and UBL 2.5
+    assertSame (EEN16931DocumentType.CII_D25A, EEN16931Edition.EN2026.getDocumentType (EEN16931SyntaxKind.CII));
+    assertSame (EEN16931DocumentType.UBL25_INVOICE,
+                EEN16931Edition.EN2026.getDocumentType (EEN16931SyntaxKind.UBL_INVOICE));
+    assertSame (EEN16931DocumentType.UBL25_CREDIT_NOTE,
+                EEN16931Edition.EN2026.getDocumentType (EEN16931SyntaxKind.UBL_CREDIT_NOTE));
+    assertEquals ("D25A", EEN16931Edition.EN2026.getCIISyntaxVersion ());
+    assertEquals ("2.5", EEN16931Edition.EN2026.getUBLSyntaxVersion ());
+
+    // The UBL version is the same for the Invoice and for the Credit Note
+    for (final EEN16931Edition e : EEN16931Edition.values ())
+      assertEquals (e.getDocumentType (EEN16931SyntaxKind.UBL_INVOICE).getSyntaxVersion (),
+                    e.getDocumentType (EEN16931SyntaxKind.UBL_CREDIT_NOTE).getSyntaxVersion ());
+  }
+
+  @Test
+  public void testDetectDocumentType ()
+  {
+    // The two together tell what a document actually is - the syntax kind from the document
+    // element, the syntax version from the edition behind BT-24
+    final Document aDoc = DOMReader.readXMLDOM (new File (UBL_DIR, "ubl-2026-creditnote.xml"));
+    assertNotNull (aDoc);
+
+    final EEN16931SyntaxKind eSyntaxKind = EEN16931SyntaxKind.getFromNodeOrNull (aDoc);
+    final EEN16931Edition eEdition = EEN16931Edition.detect (aDoc);
+    assertSame (EEN16931SyntaxKind.UBL_CREDIT_NOTE, eSyntaxKind);
+    assertSame (EEN16931Edition.EN2026, eEdition);
+    assertSame (EEN16931DocumentType.UBL25_CREDIT_NOTE, eEdition.getDocumentType (eSyntaxKind));
+  }
+
+  @Test
   public void testGetFromSpecificationIdentifier ()
   {
     // Plain

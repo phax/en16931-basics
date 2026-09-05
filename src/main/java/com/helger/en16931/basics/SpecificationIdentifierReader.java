@@ -23,7 +23,6 @@ import javax.xml.namespace.QName;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.Attributes;
@@ -247,12 +246,7 @@ public final class SpecificationIdentifierReader
   @Nullable
   public static String getSpecificationIdentifier (@Nullable final Node aNode)
   {
-    if (aNode == null)
-      return null;
-
-    final Element aRoot = aNode instanceof final Document aDoc ? aDoc.getDocumentElement ()
-                                                               : aNode instanceof final Element aElement ? aElement
-                                                                                                         : null;
+    final Element aRoot = EEN16931SyntaxKind.getRootElementOrNull (aNode);
     if (aRoot == null)
       return null;
 

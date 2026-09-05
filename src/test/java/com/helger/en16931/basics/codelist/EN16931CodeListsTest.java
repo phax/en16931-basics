@@ -126,6 +126,38 @@ public final class EN16931CodeListsTest
   }
 
   @Test
+  public void testTaxSchemeCodeIsAnInversePair ()
+  {
+    // The single entry that differs between UNECE 1153 (CII) and UNECE 5153 (UBL)
+    assertEquals ("VAT", EN16931CodeLists.mapTaxSchemeCodeCIIToUBL ("VA"));
+    assertEquals ("VA", EN16931CodeLists.mapTaxSchemeCodeUBLToCII ("VAT"));
+
+    // Round trip in both directions for every entry of the code list
+    for (final EEN16931TaxSchemeCode e : EEN16931TaxSchemeCode.values ())
+    {
+      assertEquals (e.getUBLCode (), EN16931CodeLists.mapTaxSchemeCodeCIIToUBL (e.getCIICode ()));
+      assertEquals (e.getCIICode (), EN16931CodeLists.mapTaxSchemeCodeUBLToCII (e.getUBLCode ()));
+      assertEquals (e.getCIICode (),
+                    EN16931CodeLists.mapTaxSchemeCodeUBLToCII (EN16931CodeLists.mapTaxSchemeCodeCIIToUBL (e.getCIICode ())));
+      assertEquals (e.getUBLCode (),
+                    EN16931CodeLists.mapTaxSchemeCodeCIIToUBL (EN16931CodeLists.mapTaxSchemeCodeUBLToCII (e.getUBLCode ())));
+    }
+  }
+
+  @Test
+  public void testTaxSchemeCodePassesEverythingElseThrough ()
+  {
+    for (final String s : new String [] { "FC", "LOC", "999", "" })
+    {
+      assertEquals (s, EN16931CodeLists.mapTaxSchemeCodeCIIToUBL (s));
+      assertEquals (s, EN16931CodeLists.mapTaxSchemeCodeUBLToCII (s));
+    }
+
+    assertNull (EN16931CodeLists.mapTaxSchemeCodeCIIToUBL (null));
+    assertNull (EN16931CodeLists.mapTaxSchemeCodeUBLToCII (null));
+  }
+
+  @Test
   public void testPaymentMeansCode ()
   {
     // 30 = Credit transfer, 42 = Payment to bank account, 58 = SEPA credit transfer

@@ -21,11 +21,15 @@ import javax.xml.namespace.QName;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.name.IHasDisplayName;
+import com.helger.xml.XMLHelper;
 
 /**
  * The kind of document syntax an EN 16931 core message may use. It is independent of the concrete
@@ -100,5 +104,41 @@ public enum EEN16931SyntaxKind implements IHasID <String>, IHasDisplayName
         if (e.m_aRootElementName.equals (aRootElementName))
           return e;
     return null;
+  }
+
+  /**
+   * Get the document element of the provided node. Note that
+   * <code>XMLHelper.getDocumentElement</code> cannot be used, because it resolves via the owner
+   * document and would therefore ignore a detached element.
+   *
+   * @param aNode
+   *        The document or its document element. May be <code>null</code>.
+   * @return <code>null</code> if the node is neither a {@link Document} nor an {@link Element}.
+   */
+  @Nullable
+  static Element getRootElementOrNull (@Nullable final Node aNode)
+  {
+    if (aNode instanceof final Document aDoc)
+      return aDoc.getDocumentElement ();
+    if (aNode instanceof final Element aElement)
+      return aElement;
+    return null;
+  }
+
+  /**
+   * Determine the syntax kind of an existing DOM tree from the name of its document element. This
+   * does not tell the syntax version - all UBL 2.x versions share the same document element and so
+   * do all CII versions.
+   *
+   * @param aNode
+   *        The document or its document element. May be <code>null</code>.
+   * @return <code>null</code> if the node has no document element, or if that element belongs to no
+   *         known syntax kind.
+   */
+  @Nullable
+  public static EEN16931SyntaxKind getFromNodeOrNull (@Nullable final Node aNode)
+  {
+    final Element aRoot = getRootElementOrNull (aNode);
+    return aRoot == null ? null : getFromRootElementNameOrNull (XMLHelper.getQName (aRoot));
   }
 }

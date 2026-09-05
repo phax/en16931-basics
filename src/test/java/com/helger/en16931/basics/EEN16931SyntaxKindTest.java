@@ -18,13 +18,19 @@
 package com.helger.en16931.basics;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import javax.xml.namespace.QName;
 
 import org.junit.Test;
+import org.w3c.dom.Document;
+
+import com.helger.xml.serialize.read.DOMReader;
 
 /**
  * Test class for the enums {@link EEN16931SyntaxKind} and {@link EEN16931DocumentType} and for the
@@ -34,6 +40,9 @@ import org.junit.Test;
  */
 public final class EEN16931SyntaxKindTest
 {
+  private static final String CII_DIR = "src/test/resources/external/cii/";
+  private static final String UBL_DIR = "src/test/resources/external/ubl/";
+
   @Test
   public void testSyntaxKind ()
   {
@@ -48,6 +57,40 @@ public final class EEN16931SyntaxKindTest
     assertNull (EEN16931SyntaxKind.getFromIDOrNull (null));
     assertNull (EEN16931SyntaxKind.getFromRootElementNameOrNull (new QName ("urn:whatever", "Invoice")));
     assertNull (EEN16931SyntaxKind.getFromRootElementNameOrNull (null));
+  }
+
+  @Test
+  public void testGetFromNode ()
+  {
+    final Document aUBLInvoice = DOMReader.readXMLDOM (new File (UBL_DIR, "ubl-2017-invoice.xml"));
+    final Document aUBLCreditNote = DOMReader.readXMLDOM (new File (UBL_DIR, "ubl-2026-creditnote.xml"));
+    final Document aCII = DOMReader.readXMLDOM (new File (CII_DIR, "cii-2017-invoice.xml"));
+    assertNotNull (aUBLInvoice);
+    assertNotNull (aUBLCreditNote);
+    assertNotNull (aCII);
+
+    assertSame (EEN16931SyntaxKind.UBL_INVOICE, EEN16931SyntaxKind.getFromNodeOrNull (aUBLInvoice));
+    assertSame (EEN16931SyntaxKind.UBL_CREDIT_NOTE, EEN16931SyntaxKind.getFromNodeOrNull (aUBLCreditNote));
+    assertSame (EEN16931SyntaxKind.CII, EEN16931SyntaxKind.getFromNodeOrNull (aCII));
+
+    // The document element works as well as the document
+    assertSame (EEN16931SyntaxKind.UBL_INVOICE,
+                EEN16931SyntaxKind.getFromNodeOrNull (aUBLInvoice.getDocumentElement ()));
+    assertSame (EEN16931SyntaxKind.CII, EEN16931SyntaxKind.getFromNodeOrNull (aCII.getDocumentElement ()));
+
+    // The syntax kind does not depend on the edition
+    final Document aCII2026 = DOMReader.readXMLDOM (new File (CII_DIR, "cii-2026-invoice.xml"));
+    assertNotNull (aCII2026);
+    assertSame (EEN16931SyntaxKind.CII, EEN16931SyntaxKind.getFromNodeOrNull (aCII2026));
+
+    // Neither UBL nor CII
+    final Document aUnknown = DOMReader.readXMLDOM (new File ("src/test/resources/external/unknown-syntax.xml"));
+    assertNotNull (aUnknown);
+    assertNull (EEN16931SyntaxKind.getFromNodeOrNull (aUnknown));
+
+    // A node that is neither a Document nor an Element
+    assertNull (EEN16931SyntaxKind.getFromNodeOrNull (aCII.createTextNode ("no element")));
+    assertNull (EEN16931SyntaxKind.getFromNodeOrNull (null));
   }
 
   @Test
@@ -71,6 +114,39 @@ public final class EEN16931SyntaxKindTest
     assertNull (EEN16931DocumentType.getFromSyntaxKindAndVersionOrNull (EEN16931SyntaxKind.CII, "D99Z"));
     assertNull (EEN16931DocumentType.getFromSyntaxKindAndVersionOrNull (null, "D16B"));
     assertNull (EEN16931DocumentType.getFromSyntaxKindAndVersionOrNull (EEN16931SyntaxKind.CII, null));
+  }
+
+  @Test
+  public void testEditionAndSyntaxKind ()
+  {
+    for (final EEN16931DocumentType e : EEN16931DocumentType.values ())
+      assertSame (e, EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (e.getEdition (), e.getSyntaxKind ()));
+
+    // Every combination of an edition and a syntax kind exists exactly once
+    assertEquals (EEN16931Edition.values ().length * EEN16931SyntaxKind.values ().length,
+                  EEN16931DocumentType.values ().length);
+
+    assertSame (EEN16931DocumentType.UBL21_INVOICE,
+                EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2017,
+                                                                        EEN16931SyntaxKind.UBL_INVOICE));
+    assertSame (EEN16931DocumentType.UBL21_CREDIT_NOTE,
+                EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2017,
+                                                                        EEN16931SyntaxKind.UBL_CREDIT_NOTE));
+    assertSame (EEN16931DocumentType.CII_D16B,
+                EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2017,
+                                                                        EEN16931SyntaxKind.CII));
+    assertSame (EEN16931DocumentType.UBL25_INVOICE,
+                EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2026,
+                                                                        EEN16931SyntaxKind.UBL_INVOICE));
+    assertSame (EEN16931DocumentType.UBL25_CREDIT_NOTE,
+                EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2026,
+                                                                        EEN16931SyntaxKind.UBL_CREDIT_NOTE));
+    assertSame (EEN16931DocumentType.CII_D25A,
+                EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2026,
+                                                                        EEN16931SyntaxKind.CII));
+
+    assertNull (EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (null, EEN16931SyntaxKind.CII));
+    assertNull (EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (EEN16931Edition.EN2017, null));
   }
 
   @Test

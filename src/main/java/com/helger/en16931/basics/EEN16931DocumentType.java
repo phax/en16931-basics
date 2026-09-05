@@ -29,7 +29,8 @@ import com.helger.base.name.IHasDisplayName;
  * All document types an EN 16931 core message can be represented in, being the combination of a
  * syntax kind and a concrete syntax version. The syntax version cannot be derived from the document
  * itself, because all UBL 2.x versions share the same XML namespace URIs and so do all CII
- * versions. It therefore needs to be selected by the caller.
+ * versions. It therefore needs to be selected by the caller, or derived from the EN 16931 edition
+ * of the document - see {@link #getFromEditionAndSyntaxKindOrNull(EEN16931Edition, EEN16931SyntaxKind)}.
  * <p>
  * This enum carries data only. Consumers that need a behaviour per document type - a purifier, a
  * converter or a marshaller - keep their own lookup from this enum to their factory, because those
@@ -39,33 +40,60 @@ import com.helger.base.name.IHasDisplayName;
  */
 public enum EEN16931DocumentType implements IHasID <String>, IHasDisplayName
 {
-  /** UBL 2.1 Invoice */
-  UBL21_INVOICE ("ubl21-invoice", "UBL 2.1 Invoice", EEN16931SyntaxKind.UBL_INVOICE, "2.1"),
-  /** UBL 2.1 Credit Note */
-  UBL21_CREDIT_NOTE ("ubl21-creditnote", "UBL 2.1 Credit Note", EEN16931SyntaxKind.UBL_CREDIT_NOTE, "2.1"),
-  /** UBL 2.5 Invoice */
-  UBL25_INVOICE ("ubl25-invoice", "UBL 2.5 Invoice", EEN16931SyntaxKind.UBL_INVOICE, "2.5"),
-  /** UBL 2.5 Credit Note */
-  UBL25_CREDIT_NOTE ("ubl25-creditnote", "UBL 2.5 Credit Note", EEN16931SyntaxKind.UBL_CREDIT_NOTE, "2.5"),
-  /** CII D16B Cross Industry Invoice */
-  CII_D16B ("cii-d16b", "CII D16B Cross Industry Invoice", EEN16931SyntaxKind.CII, "D16B"),
-  /** CII D25A Cross Industry Invoice */
-  CII_D25A ("cii-d25a", "CII D25A Cross Industry Invoice", EEN16931SyntaxKind.CII, "D25A");
+  /** UBL 2.1 Invoice - the UBL Invoice of EN 16931:2017 */
+  UBL21_INVOICE ("ubl21-invoice",
+                 "UBL 2.1 Invoice",
+                 EEN16931SyntaxKind.UBL_INVOICE,
+                 "2.1",
+                 EEN16931Edition.EN2017),
+  /** UBL 2.1 Credit Note - the UBL Credit Note of EN 16931:2017 */
+  UBL21_CREDIT_NOTE ("ubl21-creditnote",
+                     "UBL 2.1 Credit Note",
+                     EEN16931SyntaxKind.UBL_CREDIT_NOTE,
+                     "2.1",
+                     EEN16931Edition.EN2017),
+  /** UBL 2.5 Invoice - the UBL Invoice of EN 16931:2026 */
+  UBL25_INVOICE ("ubl25-invoice",
+                 "UBL 2.5 Invoice",
+                 EEN16931SyntaxKind.UBL_INVOICE,
+                 "2.5",
+                 EEN16931Edition.EN2026),
+  /** UBL 2.5 Credit Note - the UBL Credit Note of EN 16931:2026 */
+  UBL25_CREDIT_NOTE ("ubl25-creditnote",
+                     "UBL 2.5 Credit Note",
+                     EEN16931SyntaxKind.UBL_CREDIT_NOTE,
+                     "2.5",
+                     EEN16931Edition.EN2026),
+  /** CII D16B Cross Industry Invoice - the CII document of EN 16931:2017 */
+  CII_D16B ("cii-d16b",
+            "CII D16B Cross Industry Invoice",
+            EEN16931SyntaxKind.CII,
+            "D16B",
+            EEN16931Edition.EN2017),
+  /** CII D25A Cross Industry Invoice - the CII document of EN 16931:2026 */
+  CII_D25A ("cii-d25a",
+            "CII D25A Cross Industry Invoice",
+            EEN16931SyntaxKind.CII,
+            "D25A",
+            EEN16931Edition.EN2026);
 
   private final String m_sID;
   private final String m_sDisplayName;
   private final EEN16931SyntaxKind m_eSyntaxKind;
   private final String m_sSyntaxVersion;
+  private final EEN16931Edition m_eEdition;
 
   EEN16931DocumentType (@NonNull @Nonempty final String sID,
                         @NonNull @Nonempty final String sDisplayName,
                         @NonNull final EEN16931SyntaxKind eSyntaxKind,
-                        @NonNull @Nonempty final String sSyntaxVersion)
+                        @NonNull @Nonempty final String sSyntaxVersion,
+                        @NonNull final EEN16931Edition eEdition)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;
     m_eSyntaxKind = eSyntaxKind;
     m_sSyntaxVersion = sSyntaxVersion;
+    m_eEdition = eEdition;
   }
 
   @NonNull
@@ -102,6 +130,15 @@ public enum EEN16931DocumentType implements IHasID <String>, IHasDisplayName
     return m_sSyntaxVersion;
   }
 
+  /**
+   * @return The EN 16931 edition that prescribes this syntax version. Never <code>null</code>.
+   */
+  @NonNull
+  public EEN16931Edition getEdition ()
+  {
+    return m_eEdition;
+  }
+
   @Nullable
   public static EEN16931DocumentType getFromIDOrNull (@Nullable final String sID)
   {
@@ -124,6 +161,28 @@ public enum EEN16931DocumentType implements IHasID <String>, IHasDisplayName
     if (eSyntaxKind != null && sSyntaxVersion != null)
       for (final EEN16931DocumentType e : values ())
         if (e.m_eSyntaxKind == eSyntaxKind && e.m_sSyntaxVersion.equalsIgnoreCase (sSyntaxVersion))
+          return e;
+    return null;
+  }
+
+  /**
+   * Find the document type of the provided syntax kind that the provided EN 16931 edition
+   * prescribes. Every combination of an edition and a syntax kind has one, so this only returns
+   * <code>null</code> for a <code>null</code> argument.
+   *
+   * @param eEdition
+   *        The EN 16931 edition to search. May be <code>null</code>.
+   * @param eSyntaxKind
+   *        The syntax kind to search. May be <code>null</code>.
+   * @return <code>null</code> if no such document type exists.
+   */
+  @Nullable
+  public static EEN16931DocumentType getFromEditionAndSyntaxKindOrNull (@Nullable final EEN16931Edition eEdition,
+                                                                        @Nullable final EEN16931SyntaxKind eSyntaxKind)
+  {
+    if (eEdition != null && eSyntaxKind != null)
+      for (final EEN16931DocumentType e : values ())
+        if (e.m_eEdition == eEdition && e.m_eSyntaxKind == eSyntaxKind)
           return e;
     return null;
   }

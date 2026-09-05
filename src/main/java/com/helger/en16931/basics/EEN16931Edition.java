@@ -24,6 +24,7 @@ import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Node;
 
 import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.name.IHasDisplayName;
@@ -91,6 +92,52 @@ public enum EEN16931Edition implements IHasID <String>, IHasDisplayName
   public String getSpecificationIdentifier ()
   {
     return m_sSpecificationIdentifier;
+  }
+
+  /**
+   * Get the document type this edition prescribes for the provided syntax kind, e.g.
+   * {@link EEN16931DocumentType#CII_D16B} for {@link #EN2017} and
+   * {@link EEN16931SyntaxKind#CII}.
+   *
+   * @param eSyntaxKind
+   *        The syntax kind to get the document type for. May not be <code>null</code>.
+   * @return Never <code>null</code>, because every edition prescribes a document type for every
+   *         syntax kind.
+   */
+  @NonNull
+  public EEN16931DocumentType getDocumentType (@NonNull final EEN16931SyntaxKind eSyntaxKind)
+  {
+    ValueEnforcer.notNull (eSyntaxKind, "SyntaxKind");
+
+    final EEN16931DocumentType ret = EEN16931DocumentType.getFromEditionAndSyntaxKindOrNull (this, eSyntaxKind);
+    if (ret == null)
+      throw new IllegalStateException ("The EN 16931 edition " +
+                                       m_sID +
+                                       " has no document type for the syntax kind " +
+                                       eSyntaxKind.getID ());
+    return ret;
+  }
+
+  /**
+   * @return The UBL version this edition prescribes, e.g. <code>2.1</code>. It is the same for the
+   *         Invoice and for the Credit Note. Neither <code>null</code> nor empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getUBLSyntaxVersion ()
+  {
+    return getDocumentType (EEN16931SyntaxKind.UBL_INVOICE).getSyntaxVersion ();
+  }
+
+  /**
+   * @return The CII release this edition prescribes, e.g. <code>D16B</code>. Neither
+   *         <code>null</code> nor empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getCIISyntaxVersion ()
+  {
+    return getDocumentType (EEN16931SyntaxKind.CII).getSyntaxVersion ();
   }
 
   @Nullable

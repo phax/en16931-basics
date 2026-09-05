@@ -105,12 +105,25 @@ public final class EN16931CodeLists
   private static final ICommonsMap <String, String> DUE_DATE_TYPE_CODE_CII_TO_UBL = new CommonsHashMap <> ();
   private static final ICommonsMap <String, String> DUE_DATE_TYPE_CODE_UBL_TO_CII = new CommonsHashMap <> ();
 
+  // BT-31/BT-48/BT-63 Tax scheme identifier.
+  // The UBL syntax binding uses UNECE 5153, the CII syntax binding uses UNECE 1153, and EN 16931
+  // uses a single entry of each - see EEN16931TaxSchemeCode. As with BT-8, both directions are
+  // derived from that one enum so the two cannot drift apart.
+  private static final ICommonsMap <String, String> TAX_SCHEME_CODE_CII_TO_UBL = new CommonsHashMap <> ();
+  private static final ICommonsMap <String, String> TAX_SCHEME_CODE_UBL_TO_CII = new CommonsHashMap <> ();
+
   static
   {
     for (final EEN16931DueDateTypeCode e : EEN16931DueDateTypeCode.values ())
     {
       DUE_DATE_TYPE_CODE_CII_TO_UBL.put (e.getCIICode (), e.getUBLCode ());
       DUE_DATE_TYPE_CODE_UBL_TO_CII.put (e.getUBLCode (), e.getCIICode ());
+    }
+
+    for (final EEN16931TaxSchemeCode e : EEN16931TaxSchemeCode.values ())
+    {
+      TAX_SCHEME_CODE_CII_TO_UBL.put (e.getCIICode (), e.getUBLCode ());
+      TAX_SCHEME_CODE_UBL_TO_CII.put (e.getUBLCode (), e.getCIICode ());
     }
   }
 
@@ -164,6 +177,38 @@ public final class EN16931CodeLists
   public static String mapDueDateTypeCodeUBLToCII (@Nullable final String s)
   {
     return DUE_DATE_TYPE_CODE_UBL_TO_CII.getOrDefault (s, s);
+  }
+
+  /**
+   * Map a BT-31/BT-48/BT-63 tax scheme identifier from the CII code list (UNECE 1153) to the UBL
+   * code list (UNECE 5153), so CII <code>VA</code> becomes UBL <code>VAT</code>. This is the exact
+   * inverse of {@link #mapTaxSchemeCodeUBLToCII(String)}.
+   *
+   * @param s
+   *        The CII tax scheme identifier. May be <code>null</code>.
+   * @return The UBL tax scheme identifier, or the unchanged input if the code is identical in both
+   *         code lists.
+   */
+  @Nullable
+  public static String mapTaxSchemeCodeCIIToUBL (@Nullable final String s)
+  {
+    return TAX_SCHEME_CODE_CII_TO_UBL.getOrDefault (s, s);
+  }
+
+  /**
+   * Map a BT-31/BT-48/BT-63 tax scheme identifier from the UBL code list (UNECE 5153) to the CII
+   * code list (UNECE 1153), so UBL <code>VAT</code> becomes CII <code>VA</code>. This is the exact
+   * inverse of {@link #mapTaxSchemeCodeCIIToUBL(String)}.
+   *
+   * @param s
+   *        The UBL tax scheme identifier. May be <code>null</code>.
+   * @return The CII tax scheme identifier, or the unchanged input if the code is identical in both
+   *         code lists.
+   */
+  @Nullable
+  public static String mapTaxSchemeCodeUBLToCII (@Nullable final String s)
+  {
+    return TAX_SCHEME_CODE_UBL_TO_CII.getOrDefault (s, s);
   }
 
   /**

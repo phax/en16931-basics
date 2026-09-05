@@ -199,6 +199,15 @@ v1.0.0 - 2026-09-05
   `EEN16931AllowanceReasonCode` to `EEN16931VATEXCode`. `EN16931CodeLists` derives its BT-3 sets and
   its BT-8 mappings from them. The unit codes of BT-130 and BT-150 are the one exception — 2162
   codes do not fit into a Java enum.
+* Contains `EEN16931DateFormatCode` with the UNTDID 2379 date format qualifiers the CII syntax
+  binding uses, and the parsing and writing that goes with them
+* `EN16931CodeLists` maps the BT-31/BT-48/BT-63 tax scheme identifier between UBL and CII
+  (`mapTaxSchemeCodeCIIToUBL` and `mapTaxSchemeCodeUBLToCII`), derived from `EEN16931TaxSchemeCode`
+* `EEN16931Edition` tells the syntax version it prescribes — `getDocumentType`,
+  `getUBLSyntaxVersion` and `getCIISyntaxVersion` — and `EEN16931DocumentType` names its
+  `getEdition` in return
+* `EEN16931SyntaxKind.getFromNodeOrNull` determines the syntax kind straight from a DOM document or
+  document element
 
 ---
 

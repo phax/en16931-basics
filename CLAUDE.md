@@ -44,10 +44,12 @@ pins the literals.
 
 ```
 com.helger.en16931.basics
-  EEN16931Edition        EN2017 / EN2026, BT-24 specification identifiers, BT-24 based detection
+  EEN16931Edition        EN2017 / EN2026, BT-24 specification identifiers, BT-24 based detection,
+                         and the syntax versions the edition prescribes
   CEN16931Syntax         namespace URIs, customary prefixes, document element QNames
   EEN16931SyntaxKind     UBL_INVOICE, UBL_CREDIT_NOTE, CII - independent of the syntax version
-  EEN16931DocumentType   syntax kind x syntax version, data only
+  EEN16931DocumentType   syntax kind x syntax version, plus the edition; data only
+  EEN16931DateFormatCode UNTDID 2379 date format qualifiers of the CII syntax binding
   SpecificationIdentifierReader  BT-24 extraction - SAX from a source, DOM from a Node
   ConversionHelper       ifNotNull, ifNotEmpty
 
@@ -93,12 +95,18 @@ with a different CII code - `Time`, `VAT ID`, `VAT CAT` - carry both codes and o
 `getUBLCode()` / `getCIICode()` instead of `getID()`.
 
 `EN16931CodeLists` keeps the classifying helpers and **derives** `INVOICE_TYPE_CODES`,
-`CREDIT_NOTE_TYPE_CODES` and both BT-8 mappings from the enums, so no value is written down twice.
+`CREDIT_NOTE_TYPE_CODES` and both the BT-8 and the BT-31/BT-48/BT-63 mappings from the enums, so no
+value is written down twice.
+
+`EEN16931DateFormatCode` is **not** part of the workbook and therefore lives outside the `codelist`
+package. It holds the UNTDID 2379 qualifiers of the CII `format` attribute - EN 16931 only ever
+writes `102`, and since the 2026 edition `208` for BT-166 - together with the matching Java
+patterns. UBL needs no counterpart, because it uses the XML Schema date types.
 
 Two tests make a workbook update safe: `EN16931CodeListEnumsTest` asserts the row count of every
 sheet, that no code is duplicated and that every code can be looked up again;
-`EN16931CodeListsTest` asserts the classification of the interesting codes and that the BT-8 pair is
-a true inverse. Bump `CODE_LIST_VERSION` and `CODE_LIST_EFFECTIVE_DATE` together with any value
+`EN16931CodeListsTest` asserts the classification of the interesting codes and that the BT-8 and the
+tax scheme pair are true inverses. Bump `CODE_LIST_VERSION` and `CODE_LIST_EFFECTIVE_DATE` together with any value
 change, and update the counts in `EN16931CodeListEnumsTest`.
 
 ### The unit codes are deliberately not an enum - do not re-add them
