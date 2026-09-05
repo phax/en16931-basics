@@ -2,7 +2,7 @@
 
 Shared building blocks for `en16931-cii2ubl`, `en16931-purifier` and `en16931-ubl2cii`.
 
-Status: B1-B8 done, B9 (release) and section 4 (consumer migration) open · Created 2026-09-05
+Status: B1-B10 done, B9 (release) and section 4 (consumer migration) open · Created 2026-09-05
 
 ## 1. Scope
 
@@ -84,9 +84,9 @@ en16931-ubl2cii/en16931-ubl2cii/src/main/java/com/helger/en16931/ubl2cii/
 - [x] **B4 — `EEN16931SyntaxKind`.** Move from purifier unchanged.
 
 - [x] **B5 — BT-24 detection.** `getSpecificationIdentifier(Node)` / `(File)` and
-      `detect(Node)` / `(File)`, lifted from cii2ubl's `EEN16931Edition`. DOM peek only, never
-      JAXB — the right model is exactly what is not yet known. Guard `File.isFile()`;
-      `DOMReader.readXMLDOM` throws on a missing file.
+      `detect(Node)` / `(File)`, lifted from cii2ubl's `EEN16931Edition`. Never JAXB — the right
+      model is exactly what is not yet known. Guard `File.isFile()`; the readers throw or log on a
+      missing file. See B10 for where the reading ended up.
 
 - [x] **B6 — Code lists (`com.helger.en16931.basics.codelist`).** The valuable part.
       - `EN16931CodeLists.INVOICE_TYPE_CODES` / `CREDIT_NOTE_TYPE_CODES` (UNTDID 1001, BT-3)
@@ -112,6 +112,22 @@ en16931-ubl2cii/en16931-ubl2cii/src/main/java/com/helger/en16931/ubl2cii/
       (`380`→Invoice, `381`/`81`/`502`/`503`→Credit Note, `471`→Invoice). Assert the BT-8 pair is a
       true inverse for all three mappings. Assert BT-24 prefix matching including the XRechnung
       `#compliant#` form and the undeterminable cases.
+
+- [x] **B10 — `SpecificationIdentifierReader`.** Move the BT-24 extraction out of the enum into
+      its own class and read via **SAX** instead of building a DOM tree: BT-24 sits close to the
+      start of the document in both syntaxes, so the content handler stops the parser as soon as
+      the value is known and the rest of the file is never read. The DOM variant stays for callers
+      that hold the document in memory anyway; `EEN16931Edition` only delegates.
+      `SpecificationIdentifierReaderTest` asserts that both paths agree on every test document.
+
+- [x] **B11 — One enum per code list.** Every sheet of the workbook
+      `EN16931 code lists values v17b - used from 2026-05-15.xlsx` became an enum in the
+      `codelist` package — `EEN16931CountryCode`, `EEN16931CurrencyCode`,
+      `EEN16931InvoiceTypeCode` and 13 more, plus `EEN16931InvoiceTypeCodeRole`.
+      `EN16931CodeLists` now **derives** its BT-3 sets and its BT-8 mappings from them, so no value
+      is written down twice. Counts are asserted per sheet in `EN16931CodeListEnumsTest`.
+      **The `Unit` sheet is the exception and stays out**: 2162 constants exceed the 65535 byte
+      limit for a class initializer, so the enum does not compile. Do not re-add it.
 
 - [ ] **B9 — Release 1.0.0**, then migrate the consumers.
 

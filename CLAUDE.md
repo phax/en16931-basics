@@ -48,10 +48,12 @@ com.helger.en16931.basics
   CEN16931Syntax         namespace URIs, customary prefixes, document element QNames
   EEN16931SyntaxKind     UBL_INVOICE, UBL_CREDIT_NOTE, CII - independent of the syntax version
   EEN16931DocumentType   syntax kind x syntax version, data only
+  SpecificationIdentifierReader  BT-24 extraction - SAX from a source, DOM from a Node
   ConversionHelper       ifNotNull, ifNotEmpty
 
 com.helger.en16931.basics.codelist
-  EN16931CodeLists       the UNTDID subsets EN 16931 uses and the UBL <-> CII code mappings
+  EN16931CodeLists       the classifying helpers on top of the enums, and the workbook version
+  EEN16931...Code        one enum per sheet of the code list workbook
 ```
 
 ### Why the edition cannot be detected from the namespaces
@@ -59,9 +61,16 @@ com.helger.en16931.basics.codelist
 CII D16B, D22B and D25A all declare the identical namespace URIs, and so do all UBL 2.x versions.
 The XML Schema does not discriminate either, because a D16B instance also validates against the D25A
 XSD. The only reliable discriminator is BT-24, which is why `EEN16931Edition` carries the detection.
-The detection is a **DOM peek and never unmarshals** - the correct JAXB model is exactly what is not
-known yet. BT-24 is matched by **prefix**, because CIUS identifiers are appended with
-`#compliant#...`.
+The detection **never unmarshals** - the correct JAXB model is exactly what is not known yet. BT-24
+is matched by **prefix**, because CIUS identifiers are appended with `#compliant#...`.
+
+The extraction itself lives in `SpecificationIdentifierReader`, not in the enum - the enum only
+delegates. The `File` / `IReadableResource` / `InputSource` overloads read via **SAX** and throw a
+stack-trace-free `StopParsingException` out of the content handler as soon as BT-24 is known, so the
+bulk of the document is never read. That exception is swallowed by the settings' exception callback,
+because the abort is control flow and not a parse error. The consequence worth knowing: XML that is
+malformed *behind* BT-24 is not detected any more, which is fine - detecting the edition never
+implied that the document is valid.
 
 `EEN16931DocumentType` carries **data only**. A consumer that needs a behaviour per document type -
 a purifier, a converter, a marshaller - keeps its own lookup from the enum to its factory, because
@@ -69,15 +78,41 @@ those objects are typed to a JAXB model this artefact does not depend on.
 
 ## The code lists
 
-`EN16931CodeLists` is the valuable part of this artefact and the part that is easiest to get wrong.
+The code lists are the valuable part of this artefact and the part that is easiest to get wrong.
 The source of truth is the workbook `EN16931 code lists values v17b - used from 2026-05-15.xlsx`
 from the [EN 16931 registry of supporting
 artefacts](https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108974/Registry+of+supporting+artefacts+to+implement+EN16931#RegistryofsupportingartefactstoimplementEN16931-CEN/TC434EN16931).
+Philip keeps every released version of that workbook in
+`~/svn-philip/Code Lists/EN 16931/`.
 
-The lists are hand maintained, and `EN16931CodeListsTest` is what makes that safe: it asserts the
-counts, the classification of the interesting codes and that the BT-8 pair is a true inverse. Bump
-`CODE_LIST_VERSION` and `CODE_LIST_EFFECTIVE_DATE` together with any value change, and update the
-counts in the test.
+**Every sheet of the workbook is one enum** in the `codelist` package - `EEN16931CountryCode`,
+`EEN16931CurrencyCode`, `EEN16931InvoiceTypeCode` and so on, with the one exception below. They were transcribed from the workbook in
+one go and are marked `@CodingStyleguideUnaware`, because a code that is not a valid Java identifier
+becomes a constant with a leading underscore (`_0002`, `_10`). The three sheets that pair a UBL code
+with a different CII code - `Time`, `VAT ID`, `VAT CAT` - carry both codes and offer
+`getUBLCode()` / `getCIICode()` instead of `getID()`.
+
+`EN16931CodeLists` keeps the classifying helpers and **derives** `INVOICE_TYPE_CODES`,
+`CREDIT_NOTE_TYPE_CODES` and both BT-8 mappings from the enums, so no value is written down twice.
+
+Two tests make a workbook update safe: `EN16931CodeListEnumsTest` asserts the row count of every
+sheet, that no code is duplicated and that every code can be looked up again;
+`EN16931CodeListsTest` asserts the classification of the interesting codes and that the BT-8 pair is
+a true inverse. Bump `CODE_LIST_VERSION` and `CODE_LIST_EFFECTIVE_DATE` together with any value
+change, and update the counts in `EN16931CodeListEnumsTest`.
+
+### The unit codes are deliberately not an enum - do not re-add them
+
+The `Unit` sheet holds UN/ECE Recommendation N&deg;20 and N&deg;21 together, 2162 codes. An enum of
+that size **does not compile**: a Java class initializer may not exceed 65535 bytes of bytecode, and
+2162 constants blow past it. `javac` happens to squeak under the limit because it moves the `$VALUES`
+array into a separate synthetic method, but the Eclipse compiler does not, so the class is red in the
+IDE even when Maven is green.
+
+`EEN16931UnitCode` and `EEN16931UnitCodeSource` existed briefly and were removed for exactly this
+reason. Do not generate them again - not split by recommendation, not with fewer constructor
+arguments. If BT-130 and BT-150 ever need validating here, it has to be a `Set <String>` or a
+resource file, not an enum.
 
 Traps that cost five rounds to find in cii2ubl:
 
@@ -90,6 +125,14 @@ Traps that cost five rounds to find in cii2ubl:
 - **There is no 2017 to 2026 delta in this list at all.** The lists are versioned by date, not by
   edition, so both editions share them. Do not parameterise the API by edition until a real
   divergence appears.
+- The `Text` and `Charge` sheets have several hundred **trailing empty rows** below the data. Row
+  counts taken from `max_row` are wrong; 401 and 178 are the real ones.
+- The workbook's own index says v17 removed `ANG` from the currency list, but it was still in it -
+  v17b is the correction. Trust the sheet, not the index.
+- 31 of the French VATEX names contain a **non-breaking space** (U+00A0), e.g. `Code Général des
+  Impôts (CGI ; General tax code)`. That is what the workbook has, so that is what
+  `EEN16931VATEXCode` has. Do not "fix" it into a normal space - it would silently differ from the
+  source of truth.
 - The BT-8 mappings are derived from a **single table** so they cannot drift apart. Keep it that
   way; the previous arrangement held the two halves together with nothing but a comment, and that
   comment went stale.
@@ -97,6 +140,8 @@ Traps that cost five rounds to find in cii2ubl:
 ## Testing
 
 - JUnit 4
+- `SpecificationIdentifierReaderTest` asserts that the SAX and the DOM path return the same value
+  for every test document. That equality is the actual contract of the SAX rewrite.
 - The test documents below `src/test/resources/external/` are purpose built minimal fragments. They
   are **not** valid UBL or CII documents - they contain just enough to exercise the BT-24 detection,
   including the XRechnung and Peppol `#compliant#` forms and the undeterminable cases.

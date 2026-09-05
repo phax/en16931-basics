@@ -20,16 +20,19 @@ package com.helger.en16931.basics.codelist;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.annotation.style.ReturnsImmutableObject;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.CommonsLinkedHashSet;
 import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.datetime.helper.PDTFactory;
 
 /**
@@ -50,6 +53,17 @@ import com.helger.datetime.helper.PDTFactory;
 @Immutable
 public final class EN16931CodeLists
 {
+  @NonNull
+  @ReturnsImmutableObject
+  private static Set <String> _getAllTypeCodes (@NonNull final EEN16931InvoiceTypeCodeRole eRole)
+  {
+    final ICommonsOrderedSet <String> ret = new CommonsLinkedHashSet <> ();
+    for (final EEN16931InvoiceTypeCode e : EEN16931InvoiceTypeCode.values ())
+      if (e.getRole () == eRole)
+        ret.add (e.getID ());
+    return Collections.unmodifiableSet (ret);
+  }
+
   /**
    * The version of the EN 16931 code list workbook that this class implements. Consumers can report
    * this value to state what they are based on.
@@ -62,21 +76,18 @@ public final class EN16931CodeLists
   // BT-3 Invoice type code, UNTDID 1001, as a subset of 62 codes each classified as either an
   // Invoice or a Credit Note. No code appears in both roles.
   //
-  // The values below are taken from sheet "1001" of the workbook. The seven codes 471, 472, 473,
-  // 500, 501, 502 and 503 were added in v15 (used from 2025-05-15).
+  // Both sets are derived from EEN16931InvoiceTypeCode, so the classification exists exactly once.
   //
   // Note: the EN 16931 validation artefacts additionally accept "81" on an Invoice, whereas every
   // version of the code list has it as a Credit Note only. The code list wins here.
 
   /** BT-3 Invoice type codes of UNTDID 1001 that identify an Invoice - 49 codes */
   @CodingStyleguideUnaware
-  public static final Set <String> INVOICE_TYPE_CODES = Collections.unmodifiableSet (StringHelper.getExplodedToSet (" ",
-                                                                                                                   "71 80 82 84 102 130 202 203 204 211 218 219 295 325 326 331 380 382 383 384 385 386 387 388 389 390 393 394 395 456 457 471 472 473 500 501 527 553 575 623 633 751 780 817 870 875 876 877 935"));
+  public static final Set <String> INVOICE_TYPE_CODES = _getAllTypeCodes (EEN16931InvoiceTypeCodeRole.INVOICE);
 
   /** BT-3 Invoice type codes of UNTDID 1001 that identify a Credit Note - 13 codes */
   @CodingStyleguideUnaware
-  public static final Set <String> CREDIT_NOTE_TYPE_CODES = Collections.unmodifiableSet (StringHelper.getExplodedToSet (" ",
-                                                                                                                       "81 83 261 262 296 308 381 396 420 458 502 503 532"));
+  public static final Set <String> CREDIT_NOTE_TYPE_CODES = _getAllTypeCodes (EEN16931InvoiceTypeCodeRole.CREDIT_NOTE);
 
   /** BT-17 Tender or lot reference - the UNTDID 1001 code of an originator document reference */
   public static final String DOCUMENT_TYPE_CODE_ORIGINATOR_DOCUMENT = "50";
@@ -88,21 +99,19 @@ public final class EN16931CodeLists
   public static final String DOCUMENT_TYPE_CODE_SUPPORTING_DOCUMENT = "916";
 
   // BT-8 Value added tax point date code.
-  // CII uses UNTDID 2475, the UBL syntax binding uses UNTDID 2005. Only the three codes below
-  // differ; every other code is used unchanged in both syntaxes.
-  // The reverse direction is derived from the forward direction, so the two cannot drift apart.
+  // CII uses UNTDID 2475, the UBL syntax binding uses UNTDID 2005. Only the three codes of
+  // EEN16931DueDateTypeCode differ; every other code is used unchanged in both syntaxes.
+  // Both directions are derived from that single enum, so the two cannot drift apart.
   private static final ICommonsMap <String, String> DUE_DATE_TYPE_CODE_CII_TO_UBL = new CommonsHashMap <> ();
   private static final ICommonsMap <String, String> DUE_DATE_TYPE_CODE_UBL_TO_CII = new CommonsHashMap <> ();
 
   static
   {
-    // UNTDID 2475 -> UNTDID 2005
-    DUE_DATE_TYPE_CODE_CII_TO_UBL.put ("5", "3");
-    DUE_DATE_TYPE_CODE_CII_TO_UBL.put ("29", "35");
-    DUE_DATE_TYPE_CODE_CII_TO_UBL.put ("72", "432");
-
-    for (final Map.Entry <String, String> aEntry : DUE_DATE_TYPE_CODE_CII_TO_UBL.entrySet ())
-      DUE_DATE_TYPE_CODE_UBL_TO_CII.put (aEntry.getValue (), aEntry.getKey ());
+    for (final EEN16931DueDateTypeCode e : EEN16931DueDateTypeCode.values ())
+    {
+      DUE_DATE_TYPE_CODE_CII_TO_UBL.put (e.getCIICode (), e.getUBLCode ());
+      DUE_DATE_TYPE_CODE_UBL_TO_CII.put (e.getUBLCode (), e.getCIICode ());
+    }
   }
 
   /**
