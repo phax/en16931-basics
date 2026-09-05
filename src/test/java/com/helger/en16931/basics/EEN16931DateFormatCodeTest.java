@@ -57,7 +57,10 @@ public final class EEN16931DateFormatCodeTest
 
     // Only 208 carries a time
     for (final EEN16931DateFormatCode e : EEN16931DateFormatCode.values ())
-      assertEquals (e == EEN16931DateFormatCode.CCYYMMDDHHMMSSZHHMM, e.hasTime ());
+      if (e == EEN16931DateFormatCode.CCYYMMDDHHMMSSZHHMM)
+        assertTrue (e.hasTime ());
+      else
+        assertFalse (e.hasTime ());
 
     assertNull (EEN16931DateFormatCode.getFromIDOrNull ("999"));
     assertNull (EEN16931DateFormatCode.getFromIDOrNull (""));
