@@ -205,6 +205,7 @@ public final class EN16931CodeListsTest
     assertEquals ("1001", EN16931CodeLists.DOCUMENT_TYPE_CODE_LIST_ID);
     assertEquals ("5153", EN16931CodeLists.NON_VAT_TAX_CODE_LIST_ID);
     assertEquals ("SEPA", EN16931CodeLists.CREDITOR_REFERENCE_SCHEME_ID);
+    assertEquals ("None", EN16931CodeLists.MISSING_VALUE_PLACEHOLDER);
 
     // BT-17
     assertTrue (EN16931CodeLists.isOriginatorDocumentReferenceTypeCode ("50"));

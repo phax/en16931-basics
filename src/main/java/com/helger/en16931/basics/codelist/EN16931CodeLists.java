@@ -117,6 +117,21 @@ public final class EN16931CodeLists
   public static final String NON_VAT_TAX_CODE_LIST_ID = "5153";
 
   /**
+   * The literal that both syntax bindings prescribe wherever a syntax element is mandatory but the
+   * business term behind it is absent.
+   * <p>
+   * The UBL binding uses it for BT-13 when only BT-14 is present, and for the line reference terms
+   * BT-132, BT-190, BT-192, BT-199 and BT-201, whose <code>cbc:LineID</code> is mandatory in the
+   * enclosing UBL element. The CII binding uses it for BT-11-1, which is mandatory as soon as
+   * <code>ram:SpecifiedProcuringProject</code> exists. A converter reading such a document must
+   * treat the value as "not present" rather than carry it over, because the target element is
+   * genuinely optional there.
+   *
+   * @since 1.0.1
+   */
+  public static final String MISSING_VALUE_PLACEHOLDER = "None";
+
+  /**
    * BT-90-1 - the scheme identifier of the bank assigned creditor identifier BT-90.
    * <p>
    * In UBL, BT-90 shares the element <code>cac:PartyIdentification/cbc:ID</code> with the party

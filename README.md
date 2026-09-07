@@ -193,6 +193,7 @@ v1.0.1 - work in progress
 * Added `EN16931CodeLists.CREDITOR_REFERENCE_SCHEME_ID` - the BT-90-1 scheme identifier `SEPA`, which is the only thing that tells BT-90 apart from the party identifiers BT-29, BT-46 and BT-60 in UBL
 * Added `EN16931CodeLists.NON_VAT_TAX_CODE_LIST_ID` - the BT-177-1 / BT-193-1 list identifier `5153`
 * Added `EN16931CodeLists.DOCUMENT_TYPE_CODE_LIST_ID` - the BT-122-1-1 list identifier `1001`
+* Added `EN16931CodeLists.MISSING_VALUE_PLACEHOLDER` - the literal `None` that both syntax bindings prescribe where a syntax element is mandatory but its business term is absent, as in BT-13, BT-11-1 and the line references BT-132, BT-190, BT-192, BT-199 and BT-201
 
 v1.0.0 - 2026-09-05
 * Initial version
