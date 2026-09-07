@@ -128,9 +128,13 @@ public final class EN16931CodeListsTest
   @Test
   public void testTaxSchemeCodeIsAnInversePair ()
   {
-    // The single entry that differs between UNECE 1153 (CII) and UNECE 5153 (UBL)
+    // BT-31/BT-48/BT-63 VAT identifier
     assertEquals ("VAT", EN16931CodeLists.mapTaxSchemeCodeCIIToUBL ("VA"));
     assertEquals ("VA", EN16931CodeLists.mapTaxSchemeCodeUBLToCII ("VAT"));
+
+    // BT-32 national tax registration identifier
+    assertEquals ("LOC", EN16931CodeLists.mapTaxSchemeCodeCIIToUBL ("FC"));
+    assertEquals ("FC", EN16931CodeLists.mapTaxSchemeCodeUBLToCII ("LOC"));
 
     // Round trip in both directions for every entry of the code list
     for (final EEN16931TaxSchemeCode e : EEN16931TaxSchemeCode.values ())
@@ -147,7 +151,7 @@ public final class EN16931CodeListsTest
   @Test
   public void testTaxSchemeCodePassesEverythingElseThrough ()
   {
-    for (final String s : new String [] { "FC", "LOC", "999", "" })
+    for (final String s : new String [] { "AAD", "999", "" })
     {
       assertEquals (s, EN16931CodeLists.mapTaxSchemeCodeCIIToUBL (s));
       assertEquals (s, EN16931CodeLists.mapTaxSchemeCodeUBLToCII (s));
@@ -198,6 +202,9 @@ public final class EN16931CodeListsTest
     assertEquals ("50", EN16931CodeLists.DOCUMENT_TYPE_CODE_ORIGINATOR_DOCUMENT);
     assertEquals ("130", EN16931CodeLists.DOCUMENT_TYPE_CODE_OBJECT_DOCUMENT);
     assertEquals ("916", EN16931CodeLists.DOCUMENT_TYPE_CODE_SUPPORTING_DOCUMENT);
+    assertEquals ("1001", EN16931CodeLists.DOCUMENT_TYPE_CODE_LIST_ID);
+    assertEquals ("5153", EN16931CodeLists.NON_VAT_TAX_CODE_LIST_ID);
+    assertEquals ("SEPA", EN16931CodeLists.CREDITOR_REFERENCE_SCHEME_ID);
 
     // BT-17
     assertTrue (EN16931CodeLists.isOriginatorDocumentReferenceTypeCode ("50"));

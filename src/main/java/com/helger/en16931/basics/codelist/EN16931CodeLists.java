@@ -98,6 +98,38 @@ public final class EN16931CodeLists
   /** BG-24 Additional supporting documents - the UNTDID 1001 code of a supporting document */
   public static final String DOCUMENT_TYPE_CODE_SUPPORTING_DOCUMENT = "916";
 
+  /**
+   * BT-122-1-1 - the identifier of the UNTDID 1001 code list itself, written as the list identifier
+   * of a supporting document type code.
+   *
+   * @since 1.0.1
+   */
+  public static final String DOCUMENT_TYPE_CODE_LIST_ID = "1001";
+
+  /**
+   * BT-177-1 and BT-193-1 - the identifier of the UNTDID 5153 code list, written as the list
+   * identifier of an allowance or charge reason code. Its presence is the only thing that
+   * distinguishes the tax codes BT-177 and BT-193 from the reason codes BT-105 and BT-145, which
+   * come from UNTDID 7161.
+   *
+   * @since 1.0.1
+   */
+  public static final String NON_VAT_TAX_CODE_LIST_ID = "5153";
+
+  /**
+   * BT-90-1 - the scheme identifier of the bank assigned creditor identifier BT-90.
+   * <p>
+   * In UBL, BT-90 shares the element <code>cac:PartyIdentification/cbc:ID</code> with the party
+   * identifiers BT-29, BT-46 and BT-60, and this scheme identifier is the only thing that tells
+   * them apart. A party identifier scheme must be an ISO 6523 ICD code, so an identifier carrying
+   * this value must never be read or written as one. In CII the two have separate elements -
+   * <code>ram:CreditorReferenceID</code> against <code>ram:ID</code> and <code>ram:GlobalID</code> -
+   * and no scheme identifier is written at all.
+   *
+   * @since 1.0.1
+   */
+  public static final String CREDITOR_REFERENCE_SCHEME_ID = "SEPA";
+
   // BT-8 Value added tax point date code.
   // CII uses UNTDID 2475, the UBL syntax binding uses UNTDID 2005. Only the three codes of
   // EEN16931DueDateTypeCode differ; every other code is used unchanged in both syntaxes.

@@ -188,6 +188,12 @@ mvn clean install
 
 # News and noteworthy
 
+v1.0.1 - work in progress
+* Added `EEN16931TaxSchemeCode.LOC`, the BT-32 national tax registration pair UBL `LOC` / CII `FC`, so `mapTaxSchemeCodeUBLToCII` and `mapTaxSchemeCodeCIIToUBL` cover BT-32 as well as BT-31, BT-48 and BT-63
+* Added `EN16931CodeLists.CREDITOR_REFERENCE_SCHEME_ID` - the BT-90-1 scheme identifier `SEPA`, which is the only thing that tells BT-90 apart from the party identifiers BT-29, BT-46 and BT-60 in UBL
+* Added `EN16931CodeLists.NON_VAT_TAX_CODE_LIST_ID` - the BT-177-1 / BT-193-1 list identifier `5153`
+* Added `EN16931CodeLists.DOCUMENT_TYPE_CODE_LIST_ID` - the BT-122-1-1 list identifier `1001`
+
 v1.0.0 - 2026-09-05
 * Initial version
 * Contains `EEN16931Edition` with the BT-24 based edition detection for UBL and CII
