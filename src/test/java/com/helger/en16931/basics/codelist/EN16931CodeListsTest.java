@@ -53,8 +53,7 @@ public final class EN16931CodeListsTest
 
     // No code appears in both roles
     for (final String sCode : EN16931CodeLists.INVOICE_TYPE_CODES)
-      assertFalse ("Code '" + sCode + "' is in both roles",
-                   EN16931CodeLists.CREDIT_NOTE_TYPE_CODES.contains (sCode));
+      assertFalse ("Code '" + sCode + "' is in both roles", EN16931CodeLists.CREDIT_NOTE_TYPE_CODES.contains (sCode));
   }
 
   @Test

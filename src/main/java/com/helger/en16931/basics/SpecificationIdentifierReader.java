@@ -63,7 +63,9 @@ public final class SpecificationIdentifierReader
 {
   /** UBL: BT-24 is the direct child <code>cbc:CustomizationID</code> of the document element */
   private static final String ELEMENT_UBL_CUSTOMIZATION_ID = "CustomizationID";
-  /** CII: BG-2 <code>rsm:ExchangedDocumentContext</code>, the first child of the document element */
+  /**
+   * CII: BG-2 <code>rsm:ExchangedDocumentContext</code>, the first child of the document element
+   */
   private static final String ELEMENT_CII_EXCHANGED_DOCUMENT_CONTEXT = "ExchangedDocumentContext";
   /** CII: <code>ram:GuidelineSpecifiedDocumentContextParameter</code> inside BG-2 */
   private static final String ELEMENT_CII_GUIDELINE = "GuidelineSpecifiedDocumentContextParameter";
@@ -148,9 +150,7 @@ public final class SpecificationIdentifierReader
                                 ELEMENT_CII_GUIDELINE.equals (sLocalName);
           break;
         case 4:
-          if (m_bInCIIGuideline &&
-              CEN16931Syntax.NS_URI_CII_RAM.equals (sNSURI) &&
-              ELEMENT_CII_ID.equals (sLocalName))
+          if (m_bInCIIGuideline && CEN16931Syntax.NS_URI_CII_RAM.equals (sNSURI) && ELEMENT_CII_ID.equals (sLocalName))
           {
             m_aValue = new StringBuilder ();
             m_nValueDepth = m_nDepth;
@@ -205,14 +205,14 @@ public final class SpecificationIdentifierReader
   {
     // rsm:ExchangedDocumentContext/ram:GuidelineSpecifiedDocumentContextParameter/ram:ID
     final Element aContext = XMLHelper.getFirstChildElementOfName (aRoot,
-                                                                  CEN16931Syntax.NS_URI_CII_RSM,
-                                                                  ELEMENT_CII_EXCHANGED_DOCUMENT_CONTEXT);
+                                                                   CEN16931Syntax.NS_URI_CII_RSM,
+                                                                   ELEMENT_CII_EXCHANGED_DOCUMENT_CONTEXT);
     if (aContext == null)
       return null;
 
     final Element aGuideline = XMLHelper.getFirstChildElementOfName (aContext,
-                                                                    CEN16931Syntax.NS_URI_CII_RAM,
-                                                                    ELEMENT_CII_GUIDELINE);
+                                                                     CEN16931Syntax.NS_URI_CII_RAM,
+                                                                     ELEMENT_CII_GUIDELINE);
     if (aGuideline == null)
       return null;
 
@@ -227,8 +227,8 @@ public final class SpecificationIdentifierReader
   {
     // cbc:CustomizationID
     final Element aCustomizationID = XMLHelper.getFirstChildElementOfName (aRoot,
-                                                                          CEN16931Syntax.NS_URI_UBL_CBC,
-                                                                          ELEMENT_UBL_CUSTOMIZATION_ID);
+                                                                           CEN16931Syntax.NS_URI_UBL_CBC,
+                                                                           ELEMENT_UBL_CUSTOMIZATION_ID);
     return aCustomizationID == null ? null : StringHelper.trim (aCustomizationID.getTextContent ());
   }
 

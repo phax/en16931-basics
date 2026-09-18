@@ -39,8 +39,7 @@ import com.helger.datetime.helper.PDTFactory;
  * The subsets of the UNTDID code lists that EN 16931 uses, and the mappings between the code lists
  * that the UBL and the CII syntax binding of the same business term refer to.
  * <p>
- * Source of truth for all values in this class:
- * <a href=
+ * Source of truth for all values in this class: <a href=
  * "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108974/Registry+of+supporting+artefacts+to+implement+EN16931#RegistryofsupportingartefactstoimplementEN16931-CEN/TC434EN16931">Registry
  * of supporting artefacts to implement EN 16931</a>, workbook
  * <code>EN16931 code lists values {@value #CODE_LIST_VERSION}</code>.
@@ -138,8 +137,8 @@ public final class EN16931CodeLists
    * identifiers BT-29, BT-46 and BT-60, and this scheme identifier is the only thing that tells
    * them apart. A party identifier scheme must be an ISO 6523 ICD code, so an identifier carrying
    * this value must never be read or written as one. In CII the two have separate elements -
-   * <code>ram:CreditorReferenceID</code> against <code>ram:ID</code> and <code>ram:GlobalID</code> -
-   * and no scheme identifier is written at all.
+   * <code>ram:CreditorReferenceID</code> against <code>ram:ID</code> and <code>ram:GlobalID</code>
+   * - and no scheme identifier is written at all.
    *
    * @since 1.0.1
    */

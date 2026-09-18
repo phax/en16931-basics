@@ -32,9 +32,8 @@ import com.helger.base.name.IHasDisplayName;
  * codes. The pair is what tells BT-31 and BT-32 apart in both syntaxes.
  * <p>
  * Source of truth: sheets <code>VAT ID</code> and <code>FISCAL ID</code> of the EN 16931 code list
- * workbook. The implemented version of that workbook is
- * {@link EN16931CodeLists#CODE_LIST_VERSION}, and the registry it comes from is named in
- * {@link EN16931CodeLists}.
+ * workbook. The implemented version of that workbook is {@link EN16931CodeLists#CODE_LIST_VERSION},
+ * and the registry it comes from is named in {@link EN16931CodeLists}.
  *
  * @author Philip Helger
  */
@@ -56,8 +55,8 @@ public enum EEN16931TaxSchemeCode implements IHasDisplayName
   private final String m_sDisplayName;
 
   EEN16931TaxSchemeCode (@NonNull @Nonempty final String sUBLCode,
-        @NonNull @Nonempty final String sCIICode,
-        @NonNull @Nonempty final String sDisplayName)
+                         @NonNull @Nonempty final String sCIICode,
+                         @NonNull @Nonempty final String sDisplayName)
   {
     m_sUBLCode = sUBLCode;
     m_sCIICode = sCIICode;

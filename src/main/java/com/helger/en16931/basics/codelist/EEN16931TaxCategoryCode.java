@@ -50,7 +50,9 @@ public enum EEN16931TaxCategoryCode implements IHasID <String>, IHasDisplayName
   /** <code>AE</code> - VAT Reverse charge */
   AE ("AE", "VAT Reverse charge", "VAT reverse charge"),
   /** <code>K</code> - VAT exempt for EEA intra-community supply of goods and services */
-  K ("K", "VAT exempt for EEA intra-community supply of goods and services", "VAT exempt for intra community supply of goods"),
+  K ("K",
+     "VAT exempt for EEA intra-community supply of goods and services",
+     "VAT exempt for intra community supply of goods"),
   /** <code>G</code> - Free export item, tax not charged */
   G ("G", "Free export item, tax not charged", "Free export item, tax not charged"),
   /** <code>O</code> - Service outside scope of tax */

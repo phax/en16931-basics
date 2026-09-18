@@ -156,8 +156,7 @@ public final class EEN16931EditionTest
     final Document aDoc2026 = DOMReader.readXMLDOM (new File (CII_DIR, "cii-2026-invoice.xml"));
     assertNotNull (aDoc2017);
     assertNotNull (aDoc2026);
-    assertEquals (aDoc2017.getDocumentElement ().getNamespaceURI (),
-                  aDoc2026.getDocumentElement ().getNamespaceURI ());
+    assertEquals (aDoc2017.getDocumentElement ().getNamespaceURI (), aDoc2026.getDocumentElement ().getNamespaceURI ());
     assertSame (EEN16931Edition.EN2017, EEN16931Edition.detect (aDoc2017));
     assertSame (EEN16931Edition.EN2026, EEN16931Edition.detect (aDoc2026));
 

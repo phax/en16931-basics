@@ -42,7 +42,10 @@ import com.helger.collection.commons.ICommonsMap;
 @CodingStyleguideUnaware
 public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
 {
-  /** <code>0002</code> - System Information et Repertoire des Entreprise et des Etablissements: SIRENE */
+  /**
+   * <code>0002</code> - System Information et Repertoire des Entreprise et des Etablissements:
+   * SIRENE
+   */
   _0002 ("0002", "System Information et Repertoire des Entreprise et des Etablissements: SIRENE"),
   /** <code>0003</code> - Codification Numerique des Etablissments Financiers En Belgique */
   _0003 ("0003", "Codification Numerique des Etablissments Financiers En Belgique"),
@@ -60,8 +63,12 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0009 ("0009", "SIRET-CODE"),
   /** <code>0010</code> - Organizational Identifiers for Structured Names under ISO 9541 Part 2 */
   _0010 ("0010", "Organizational Identifiers for Structured Names under ISO 9541 Part 2"),
-  /** <code>0011</code> - International Code Designator for the Identification of OSI-based, Amateur Radio Organizations, Network Objects and Application Services. */
-  _0011 ("0011", "International Code Designator for the Identification of OSI-based, Amateur Radio Organizations, Network Objects and Application Services."),
+  /**
+   * <code>0011</code> - International Code Designator for the Identification of OSI-based, Amateur
+   * Radio Organizations, Network Objects and Application Services.
+   */
+  _0011 ("0011",
+         "International Code Designator for the Identification of OSI-based, Amateur Radio Organizations, Network Objects and Application Services."),
   /** <code>0012</code> - European Computer Manufacturers Association: ECMA */
   _0012 ("0012", "European Computer Manufacturers Association: ECMA"),
   /** <code>0013</code> - VSA FTP CODE (FTP = File Transfer Protocol) */
@@ -202,7 +209,10 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0080 ("0080", "UK National Health Service Scheme, (EDIRA compliant)"),
   /** <code>0081</code> - International NSAP */
   _0081 ("0081", "International NSAP"),
-  /** <code>0082</code> - Norwegian Telecommunications Authority's, NTA'S, EDI, identifier scheme (EDIRA compliant) */
+  /**
+   * <code>0082</code> - Norwegian Telecommunications Authority's, NTA'S, EDI, identifier scheme
+   * (EDIRA compliant)
+   */
   _0082 ("0082", "Norwegian Telecommunications Authority's, NTA'S, EDI, identifier scheme (EDIRA compliant)"),
   /** <code>0083</code> - Advanced Telecommunications Modules Limited, Corporate Network */
   _0083 ("0083", "Advanced Telecommunications Modules Limited, Corporate Network"),
@@ -210,13 +220,22 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0084 ("0084", "Athens Chamber of Commerce & Industry Scheme (EDIRA compliant)"),
   /** <code>0085</code> - Swiss Chambers of Commerce Scheme (EDIRA) compliant */
   _0085 ("0085", "Swiss Chambers of Commerce Scheme (EDIRA) compliant"),
-  /** <code>0086</code> - United States Council for International Business (USCIB) Scheme, (EDIRA compliant) */
+  /**
+   * <code>0086</code> - United States Council for International Business (USCIB) Scheme, (EDIRA
+   * compliant)
+   */
   _0086 ("0086", "United States Council for International Business (USCIB) Scheme, (EDIRA compliant)"),
-  /** <code>0087</code> - National Federation of Chambers of Commerce &amp; Industry of Belgium, Scheme (EDIRA compliant) */
+  /**
+   * <code>0087</code> - National Federation of Chambers of Commerce &amp; Industry of Belgium,
+   * Scheme (EDIRA compliant)
+   */
   _0087 ("0087", "National Federation of Chambers of Commerce & Industry of Belgium, Scheme (EDIRA compliant)"),
   /** <code>0088</code> - EAN Location Code */
   _0088 ("0088", "EAN Location Code"),
-  /** <code>0089</code> - The Association of British Chambers of Commerce Ltd. Scheme, (EDIRA compliant) */
+  /**
+   * <code>0089</code> - The Association of British Chambers of Commerce Ltd. Scheme, (EDIRA
+   * compliant)
+   */
   _0089 ("0089", "The Association of British Chambers of Commerce Ltd. Scheme, (EDIRA compliant)"),
   /** <code>0090</code> - Internet IP addressing - ISO 6523 ICD encoding */
   _0090 ("0090", "Internet IP addressing - ISO 6523 ICD encoding"),
@@ -246,9 +265,16 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0104 ("0104", "BT - ICD Coding System"),
   /** <code>0105</code> - Portuguese Chamber of Commerce and Industry Scheme (EDIRA compliant) */
   _0105 ("0105", "Portuguese Chamber of Commerce and Industry Scheme (EDIRA compliant)"),
-  /** <code>0106</code> - Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant) */
-  _0106 ("0106", "Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant)"),
-  /** <code>0107</code> - Association of Swedish Chambers of Commerce and Industry Scheme (EDIRA compliant) */
+  /**
+   * <code>0106</code> - Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association
+   * of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant)
+   */
+  _0106 ("0106",
+         "Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant)"),
+  /**
+   * <code>0107</code> - Association of Swedish Chambers of Commerce and Industry Scheme (EDIRA
+   * compliant)
+   */
   _0107 ("0107", "Association of Swedish Chambers of Commerce and Industry Scheme (EDIRA compliant)"),
   /** <code>0108</code> - Australian Chambers of Commerce and Industry Scheme (EDIRA compliant) */
   _0108 ("0108", "Australian Chambers of Commerce and Industry Scheme (EDIRA compliant)"),
@@ -282,8 +308,12 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0122 ("0122", "BB-DATA GmbH"),
   /** <code>0123</code> - BASF Company ATM-Network */
   _0123 ("0123", "BASF Company ATM-Network"),
-  /** <code>0124</code> - IOTA Identifiers for Organizations for Telecommunications Addressing using the ICD system format defined in ISO/IEC 8348 */
-  _0124 ("0124", "IOTA Identifiers for Organizations for Telecommunications Addressing using the ICD system format defined in ISO/IEC 8348"),
+  /**
+   * <code>0124</code> - IOTA Identifiers for Organizations for Telecommunications Addressing using
+   * the ICD system format defined in ISO/IEC 8348
+   */
+  _0124 ("0124",
+         "IOTA Identifiers for Organizations for Telecommunications Addressing using the ICD system format defined in ISO/IEC 8348"),
   /** <code>0125</code> - Henkel Corporate Network (H-Net) */
   _0125 ("0125", "Henkel Corporate Network (H-Net)"),
   /** <code>0126</code> - GTE/OSI Network */
@@ -324,13 +354,20 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0143 ("0143", "EINESTEINet AG"),
   /** <code>0144</code> - DoDAAC (Department of Defense Activity Address Code) */
   _0144 ("0144", "DoDAAC (Department of Defense Activity Address Code)"),
-  /** <code>0145</code> - DGCP (Direction Générale de la Comptabilité Publique)administrative accounting identification scheme */
-  _0145 ("0145", "DGCP (Direction Générale de la Comptabilité Publique)administrative accounting identification scheme"),
+  /**
+   * <code>0145</code> - DGCP (Direction Générale de la Comptabilité Publique)administrative
+   * accounting identification scheme
+   */
+  _0145 ("0145",
+         "DGCP (Direction Générale de la Comptabilité Publique)administrative accounting identification scheme"),
   /** <code>0146</code> - DGI (Direction Générale des Impots) code */
   _0146 ("0146", "DGI (Direction Générale des Impots) code"),
   /** <code>0147</code> - Standard Company Code */
   _0147 ("0147", "Standard Company Code"),
-  /** <code>0148</code> - ITU (International Telecommunications Union)Data Network Identification Codes (DNIC) */
+  /**
+   * <code>0148</code> - ITU (International Telecommunications Union)Data Network Identification
+   * Codes (DNIC)
+   */
   _0148 ("0148", "ITU (International Telecommunications Union)Data Network Identification Codes (DNIC)"),
   /** <code>0149</code> - Global Business Identifier */
   _0149 ("0149", "Global Business Identifier"),
@@ -350,7 +387,10 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0156 ("0156", "AUNA"),
   /** <code>0157</code> - ATM interconnection with the Dutch KPN Telecom */
   _0157 ("0157", "ATM interconnection with the Dutch KPN Telecom"),
-  /** <code>0158</code> - Identification number of economic subject (ICO) Act on State Statistics of 29 November 2'001, § 27 */
+  /**
+   * <code>0158</code> - Identification number of economic subject (ICO) Act on State Statistics of
+   * 29 November 2'001, § 27
+   */
   _0158 ("0158", "Identification number of economic subject (ICO) Act on State Statistics of 29 November 2'001, § 27"),
   /** <code>0159</code> - ACTALIS Object Identifiers */
   _0159 ("0159", "ACTALIS Object Identifiers"),
@@ -372,11 +412,18 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0167 ("0167", "Priority Telecom ATM End System Address Plan"),
   /** <code>0168</code> - Vodafone Ireland OSI Addressing */
   _0168 ("0168", "Vodafone Ireland OSI Addressing"),
-  /** <code>0169</code> - Swiss Federal Business Identification Number. Central Business names Index (zefix) Identification Number */
-  _0169 ("0169", "Swiss Federal Business Identification Number. Central Business names Index (zefix) Identification Number"),
+  /**
+   * <code>0169</code> - Swiss Federal Business Identification Number. Central Business names Index
+   * (zefix) Identification Number
+   */
+  _0169 ("0169",
+         "Swiss Federal Business Identification Number. Central Business names Index (zefix) Identification Number"),
   /** <code>0170</code> - Teikoku Company Code */
   _0170 ("0170", "Teikoku Company Code"),
-  /** <code>0171</code> - Luxembourg CP &amp; CPS (Certification Policy and Certification Practice Statement) Index */
+  /**
+   * <code>0171</code> - Luxembourg CP &amp; CPS (Certification Policy and Certification Practice
+   * Statement) Index
+   */
   _0171 ("0171", "Luxembourg CP & CPS (Certification Policy and Certification Practice Statement) Index"),
   /** <code>0172</code> - Project Group “Lists of Properties” (PROLIST®) */
   _0172 ("0172", "Project Group “Lists of Properties” (PROLIST®)"),
@@ -396,8 +443,12 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0179 ("0179", "Penango Object Identifiers"),
   /** <code>0180</code> - Lithuanian military PKI */
   _0180 ("0180", "Lithuanian military PKI"),
-  /** <code>0183</code> - Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business Identification Number (UIDB) */
-  _0183 ("0183", "Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business Identification Number (UIDB)"),
+  /**
+   * <code>0183</code> - Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business
+   * Identification Number (UIDB)
+   */
+  _0183 ("0183",
+         "Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business Identification Number (UIDB)"),
   /** <code>0184</code> - DIGSTORG */
   _0184 ("0184", "DIGSTORG"),
   /** <code>0185</code> - Perceval Object Code */
@@ -488,7 +539,10 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0227 ("0227", "NON - EU based company"),
   /** <code>0228</code> - Répertoire des Entreprises et des Etablissements (RIDET) */
   _0228 ("0228", "Répertoire des Entreprises et des Etablissements (RIDET)"),
-  /** <code>0229</code> - T.A.H.I.T.I (traitement automatique hiérarchisé des institutions de Tahiti et des îles) */
+  /**
+   * <code>0229</code> - T.A.H.I.T.I (traitement automatique hiérarchisé des institutions de Tahiti
+   * et des îles)
+   */
   _0229 ("0229", "T.A.H.I.T.I (traitement automatique hiérarchisé des institutions de Tahiti et des îles)"),
   /** <code>0230</code> - National e-Invoicing Framework */
   _0230 ("0230", "National e-Invoicing Framework"),
@@ -510,7 +564,9 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   _0238 ("0238", "Plateforme.s agréée.s à la facturation électronique (PPF/PDP)"),
   /** <code>0239</code> - EAEU */
   _0239 ("0239", "EAEU"),
-  /** <code>0240</code> - Register of legal persons (in French : Répertoire des personnes morales) */
+  /**
+   * <code>0240</code> - Register of legal persons (in French : Répertoire des personnes morales)
+   */
   _0240 ("0240", "Register of legal persons (in French : Répertoire des personnes morales)"),
   /** <code>0241</code> - Hitachi Rail */
   _0241 ("0241", "Hitachi Rail"),
@@ -540,8 +596,7 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName
   private final String m_sID;
   private final String m_sDisplayName;
 
-  EEN16931ICDCode (@NonNull @Nonempty final String sID,
-                   @NonNull @Nonempty final String sDisplayName)
+  EEN16931ICDCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;

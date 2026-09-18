@@ -55,8 +55,7 @@ public enum EEN16931TaxRegistrationCode implements IHasID <String>, IHasDisplayN
   private final String m_sID;
   private final String m_sDisplayName;
 
-  EEN16931TaxRegistrationCode (@NonNull @Nonempty final String sID,
-                               @NonNull @Nonempty final String sDisplayName)
+  EEN16931TaxRegistrationCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;

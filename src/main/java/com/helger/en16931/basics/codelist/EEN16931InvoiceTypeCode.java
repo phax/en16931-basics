@@ -132,14 +132,20 @@ public enum EEN16931InvoiceTypeCode implements IHasID <String>, IHasDisplayName
   _471 ("471", "Self-billed corrective invoice, invoice type, Corrected", EEN16931InvoiceTypeCodeRole.INVOICE),
   /** <code>472</code> - Factored Corrective Invoice, invoice type, Corrected (Invoice) */
   _472 ("472", "Factored Corrective Invoice, invoice type, Corrected", EEN16931InvoiceTypeCodeRole.INVOICE),
-  /** <code>473</code> - Self billed Factored corrective invoice, invoice type, Corrected (Invoice) */
+  /**
+   * <code>473</code> - Self billed Factored corrective invoice, invoice type, Corrected (Invoice)
+   */
   _473 ("473", "Self billed Factored corrective invoice, invoice type, Corrected", EEN16931InvoiceTypeCodeRole.INVOICE),
   /** <code>500</code> - Self Prepayment invoice, invoice type, Original (Invoice) */
   _500 ("500", "Self Prepayment invoice, invoice type, Original", EEN16931InvoiceTypeCodeRole.INVOICE),
   /** <code>501</code> - Self billed factored invoice, invoice type, Original (Invoice) */
   _501 ("501", "Self billed factored invoice, invoice type, Original", EEN16931InvoiceTypeCodeRole.INVOICE),
-  /** <code>502</code> - Self billet factored Credit Note, Credit note type, Corrected (Credit Note) */
-  _502 ("502", "Self billet factored Credit Note, Credit note type, Corrected", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE),
+  /**
+   * <code>502</code> - Self billet factored Credit Note, Credit note type, Corrected (Credit Note)
+   */
+  _502 ("502",
+        "Self billet factored Credit Note, Credit note type, Corrected",
+        EEN16931InvoiceTypeCodeRole.CREDIT_NOTE),
   /** <code>503</code> - Prepayment credit note, credit note type, Corrected (Credit Note) */
   _503 ("503", "Prepayment credit note, credit note type, Corrected", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE),
   /** <code>527</code> - Self billed debit note (Invoice) */

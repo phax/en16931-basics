@@ -1689,8 +1689,7 @@ public enum EEN16931ReferenceQualifierCode implements IHasID <String>, IHasDispl
   private final String m_sID;
   private final String m_sDisplayName;
 
-  EEN16931ReferenceQualifierCode (@NonNull @Nonempty final String sID,
-                                  @NonNull @Nonempty final String sDisplayName)
+  EEN16931ReferenceQualifierCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;

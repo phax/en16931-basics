@@ -46,8 +46,8 @@ public enum EEN16931TaxCategorySchemeCode implements IHasDisplayName
   private final String m_sDisplayName;
 
   EEN16931TaxCategorySchemeCode (@NonNull @Nonempty final String sUBLCode,
-        @NonNull @Nonempty final String sCIICode,
-        @NonNull @Nonempty final String sDisplayName)
+                                 @NonNull @Nonempty final String sCIICode,
+                                 @NonNull @Nonempty final String sDisplayName)
   {
     m_sUBLCode = sUBLCode;
     m_sCIICode = sCIICode;

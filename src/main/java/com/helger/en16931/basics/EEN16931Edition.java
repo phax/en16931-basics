@@ -40,8 +40,8 @@ import com.helger.base.string.StringHelper;
  * The edition cannot be told from the XML namespaces, because all CII releases use identical
  * namespace URIs and so do all UBL versions - see {@link CEN16931Syntax}. It cannot be told from
  * the XML Schema either, because a CII D16B instance also validates against the CII D25A XSD. The
- * only reliable discriminator is BT-24 (Specification identifier), which is mandatory in every
- * EN 16931 document.
+ * only reliable discriminator is BT-24 (Specification identifier), which is mandatory in every EN
+ * 16931 document.
  *
  * @author Philip Helger
  */
@@ -66,8 +66,8 @@ public enum EEN16931Edition implements IHasID <String>, IHasDisplayName
   }
 
   /**
-   * @return The short identifier of this edition, e.g. <code>2017</code>. Neither
-   *         <code>null</code> nor empty.
+   * @return The short identifier of this edition, e.g. <code>2017</code>. Neither <code>null</code>
+   *         nor empty.
    */
   @NonNull
   @Nonempty
@@ -96,8 +96,7 @@ public enum EEN16931Edition implements IHasID <String>, IHasDisplayName
 
   /**
    * Get the document type this edition prescribes for the provided syntax kind, e.g.
-   * {@link EEN16931DocumentType#CII_D16B} for {@link #EN2017} and
-   * {@link EEN16931SyntaxKind#CII}.
+   * {@link EEN16931DocumentType#CII_D16B} for {@link #EN2017} and {@link EEN16931SyntaxKind#CII}.
    *
    * @param eSyntaxKind
    *        The syntax kind to get the document type for. May not be <code>null</code>.

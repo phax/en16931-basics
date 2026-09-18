@@ -41,7 +41,10 @@ import com.helger.collection.commons.ICommonsMap;
 @CodingStyleguideUnaware
 public enum EEN16931EASCode implements IHasID <String>, IHasDisplayName
 {
-  /** <code>0002</code> - System Information et Repertoire des Entreprise et des Etablissements: SIRENE */
+  /**
+   * <code>0002</code> - System Information et Repertoire des Entreprise et des Etablissements:
+   * SIRENE
+   */
   _0002 ("0002", "System Information et Repertoire des Entreprise et des Etablissements: SIRENE"),
   /** <code>0007</code> - Organisationsnummer */
   _0007 ("0007", "Organisationsnummer"),
@@ -57,8 +60,12 @@ public enum EEN16931EASCode implements IHasID <String>, IHasDisplayName
   _0096 ("0096", "The Danish Business Authority - P-number (DK:P)"),
   /** <code>0097</code> - FTI - Ediforum Italia, (EDIRA compliant) */
   _0097 ("0097", "FTI - Ediforum Italia, (EDIRA compliant)"),
-  /** <code>0106</code> - Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant) */
-  _0106 ("0106", "Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant)"),
+  /**
+   * <code>0106</code> - Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association
+   * of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant)
+   */
+  _0106 ("0106",
+         "Vereniging van Kamers van Koophandel en Fabrieken in Nederland (Association of Chambers of Commerce and Industry in the Netherlands), Scheme (EDIRA compliant)"),
   /** <code>0130</code> - Directorates of the European Commission */
   _0130 ("0130", "Directorates of the European Commission"),
   /** <code>0135</code> - SIA Object Identifiers */
@@ -71,14 +78,21 @@ public enum EEN16931EASCode implements IHasID <String>, IHasDisplayName
   _0151 ("0151", "Australian Business Number (ABN) Scheme"),
   /** <code>0154</code> - Identification number of economic subjects: (ICO) */
   _0154 ("0154", "Identification number of economic subjects: (ICO)"),
-  /** <code>0158</code> - Identification number of economic subject (ICO) Act on State Statistics of 29 November 2001, § 27 */
+  /**
+   * <code>0158</code> - Identification number of economic subject (ICO) Act on State Statistics of
+   * 29 November 2001, § 27
+   */
   _0158 ("0158", "Identification number of economic subject (ICO) Act on State Statistics of 29 November 2001, § 27"),
   /** <code>0170</code> - Teikoku Company Code */
   _0170 ("0170", "Teikoku Company Code"),
   /** <code>0177</code> - Odette International Limited */
   _0177 ("0177", "Odette International Limited"),
-  /** <code>0183</code> - Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business Identification Number (UIDB) */
-  _0183 ("0183", "Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business Identification Number (UIDB)"),
+  /**
+   * <code>0183</code> - Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business
+   * Identification Number (UIDB)
+   */
+  _0183 ("0183",
+         "Numéro d'identification suisse des enterprises (IDE), Swiss Unique Business Identification Number (UIDB)"),
   /** <code>0184</code> - DIGSTORG */
   _0184 ("0184", "DIGSTORG"),
   /** <code>0188</code> - Corporate Number of The Social Security and Tax Number System */
@@ -141,7 +155,9 @@ public enum EEN16931EASCode implements IHasID <String>, IHasDisplayName
   _0230 ("0230", "National e-Invoicing Framework"),
   /** <code>0235</code> - UAE Tax Identification Number (TIN) */
   _0235 ("0235", "UAE Tax Identification Number (TIN)"),
-  /** <code>0240</code> - Register of legal persons (in French : Répertoire des personnes morales) */
+  /**
+   * <code>0240</code> - Register of legal persons (in French : Répertoire des personnes morales)
+   */
   _0240 ("0240", "Register of legal persons (in French : Répertoire des personnes morales)"),
   /** <code>0242</code> - OpenPeppol Service Provider Identification Scheme (SPIS) */
   _0242 ("0242", "OpenPeppol Service Provider Identification Scheme (SPIS)"),
@@ -257,8 +273,7 @@ public enum EEN16931EASCode implements IHasID <String>, IHasDisplayName
   private final String m_sID;
   private final String m_sDisplayName;
 
-  EEN16931EASCode (@NonNull @Nonempty final String sID,
-                   @NonNull @Nonempty final String sDisplayName)
+  EEN16931EASCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;

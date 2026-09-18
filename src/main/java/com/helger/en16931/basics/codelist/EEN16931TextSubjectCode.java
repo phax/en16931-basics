@@ -855,8 +855,7 @@ public enum EEN16931TextSubjectCode implements IHasID <String>, IHasDisplayName
   private final String m_sID;
   private final String m_sDisplayName;
 
-  EEN16931TextSubjectCode (@NonNull @Nonempty final String sID,
-                           @NonNull @Nonempty final String sDisplayName)
+  EEN16931TextSubjectCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;

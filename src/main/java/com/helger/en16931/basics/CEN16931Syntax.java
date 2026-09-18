@@ -32,17 +32,15 @@ import com.helger.annotation.concurrent.Immutable;
  * the document.</b> <code>ph-cii</code> declares the very same URIs for D16B, D22B and D25A:
  *
  * <pre>
- * CCIID16B.XML_SCHEMA_RSM_NAMESPACE_URL == CCIID22B.XML_SCHEMA_RSM_NAMESPACE_URL
- *                                       == CCIID25A.XML_SCHEMA_CII_NAMESPACE_URL
- *                                       == "urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+ * CCIID16B.XML_SCHEMA_RSM_NAMESPACE_URL == CCIID22B.XML_SCHEMA_RSM_NAMESPACE_URL == CCIID25A.XML_SCHEMA_CII_NAMESPACE_URL == "urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
  * </pre>
  *
  * Neither does the XML Schema help, because a D16B instance also validates against the D25A XSD.
  * The only reliable discriminator is BT-24 - see
  * {@link EEN16931Edition#getSpecificationIdentifier(org.w3c.dom.Node)}.
  * <p>
- * The values are deliberately spelled out as String literals and not taken from
- * <code>ph-cii</code> or <code>ph-ubl</code>, so that this artefact stays free of any JAXB model.
+ * The values are deliberately spelled out as String literals and not taken from <code>ph-cii</code>
+ * or <code>ph-ubl</code>, so that this artefact stays free of any JAXB model.
  *
  * @author Philip Helger
  */

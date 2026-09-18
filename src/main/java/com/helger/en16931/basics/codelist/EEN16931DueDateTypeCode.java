@@ -28,8 +28,8 @@ import com.helger.annotation.Nonempty;
  * Used by BT-8. EN 16931 uses this code list as a subset, and it is the one code list where the UBL
  * and the CII syntax binding refer to <b>different</b> code lists: UBL uses UNTDID 2005, CII uses
  * UNTDID 2475. Each entry therefore carries both codes, which is what makes
- * {@link EN16931CodeLists#mapDueDateTypeCodeCIIToUBL(String)} and its inverse a true pair - they are
- * derived from this single table and cannot drift apart.
+ * {@link EN16931CodeLists#mapDueDateTypeCodeCIIToUBL(String)} and its inverse a true pair - they
+ * are derived from this single table and cannot drift apart.
  * <p>
  * Source of truth: sheet <code>Time</code> of the EN 16931 code list workbook. The implemented
  * version of that workbook is {@link EN16931CodeLists#CODE_LIST_VERSION}, and the registry it comes

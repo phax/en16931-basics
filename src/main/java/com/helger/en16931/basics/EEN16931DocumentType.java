@@ -30,7 +30,8 @@ import com.helger.base.name.IHasDisplayName;
  * syntax kind and a concrete syntax version. The syntax version cannot be derived from the document
  * itself, because all UBL 2.x versions share the same XML namespace URIs and so do all CII
  * versions. It therefore needs to be selected by the caller, or derived from the EN 16931 edition
- * of the document - see {@link #getFromEditionAndSyntaxKindOrNull(EEN16931Edition, EEN16931SyntaxKind)}.
+ * of the document - see
+ * {@link #getFromEditionAndSyntaxKindOrNull(EEN16931Edition, EEN16931SyntaxKind)}.
  * <p>
  * This enum carries data only. Consumers that need a behaviour per document type - a purifier, a
  * converter or a marshaller - keep their own lookup from this enum to their factory, because those
@@ -41,11 +42,7 @@ import com.helger.base.name.IHasDisplayName;
 public enum EEN16931DocumentType implements IHasID <String>, IHasDisplayName
 {
   /** UBL 2.1 Invoice - the UBL Invoice of EN 16931:2017 */
-  UBL21_INVOICE ("ubl21-invoice",
-                 "UBL 2.1 Invoice",
-                 EEN16931SyntaxKind.UBL_INVOICE,
-                 "2.1",
-                 EEN16931Edition.EN2017),
+  UBL21_INVOICE ("ubl21-invoice", "UBL 2.1 Invoice", EEN16931SyntaxKind.UBL_INVOICE, "2.1", EEN16931Edition.EN2017),
   /** UBL 2.1 Credit Note - the UBL Credit Note of EN 16931:2017 */
   UBL21_CREDIT_NOTE ("ubl21-creditnote",
                      "UBL 2.1 Credit Note",
@@ -53,11 +50,7 @@ public enum EEN16931DocumentType implements IHasID <String>, IHasDisplayName
                      "2.1",
                      EEN16931Edition.EN2017),
   /** UBL 2.5 Invoice - the UBL Invoice of EN 16931:2026 */
-  UBL25_INVOICE ("ubl25-invoice",
-                 "UBL 2.5 Invoice",
-                 EEN16931SyntaxKind.UBL_INVOICE,
-                 "2.5",
-                 EEN16931Edition.EN2026),
+  UBL25_INVOICE ("ubl25-invoice", "UBL 2.5 Invoice", EEN16931SyntaxKind.UBL_INVOICE, "2.5", EEN16931Edition.EN2026),
   /** UBL 2.5 Credit Note - the UBL Credit Note of EN 16931:2026 */
   UBL25_CREDIT_NOTE ("ubl25-creditnote",
                      "UBL 2.5 Credit Note",
@@ -65,17 +58,9 @@ public enum EEN16931DocumentType implements IHasID <String>, IHasDisplayName
                      "2.5",
                      EEN16931Edition.EN2026),
   /** CII D16B Cross Industry Invoice - the CII document of EN 16931:2017 */
-  CII_D16B ("cii-d16b",
-            "CII D16B Cross Industry Invoice",
-            EEN16931SyntaxKind.CII,
-            "D16B",
-            EEN16931Edition.EN2017),
+  CII_D16B ("cii-d16b", "CII D16B Cross Industry Invoice", EEN16931SyntaxKind.CII, "D16B", EEN16931Edition.EN2017),
   /** CII D25A Cross Industry Invoice - the CII document of EN 16931:2026 */
-  CII_D25A ("cii-d25a",
-            "CII D25A Cross Industry Invoice",
-            EEN16931SyntaxKind.CII,
-            "D25A",
-            EEN16931Edition.EN2026);
+  CII_D25A ("cii-d25a", "CII D25A Cross Industry Invoice", EEN16931SyntaxKind.CII, "D25A", EEN16931Edition.EN2026);
 
   private final String m_sID;
   private final String m_sDisplayName;

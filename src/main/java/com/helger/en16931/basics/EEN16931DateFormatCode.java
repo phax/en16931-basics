@@ -40,10 +40,9 @@ import com.helger.datetime.xml.XMLOffsetDateTime;
  * {@link #CCYYMMDDHHMMSSZHHMM} for BT-166. The other entries exist because documents in the wild
  * use them and reading them is harmless.
  * <p>
- * Source of truth:
- * <a href="https://service.unece.org/trade/untdid/d16b/tred/tred2379.htm">UNTDID 2379</a>. This is
- * not part of the EN 16931 code list workbook, which is why this enum lives outside the
- * <code>codelist</code> package.
+ * Source of truth: <a href="https://service.unece.org/trade/untdid/d16b/tred/tred2379.htm">UNTDID
+ * 2379</a>. This is not part of the EN 16931 code list workbook, which is why this enum lives
+ * outside the <code>codelist</code> package.
  *
  * @author Philip Helger
  */
