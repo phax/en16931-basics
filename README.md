@@ -188,7 +188,7 @@ mvn clean install
 
 # News and noteworthy
 
-v1.0.2 - work in progress
+v1.0.2 - 2026-10-07
 * Added `EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull`, which reads a UBL tax scheme identifier the way the EN 16931:2017 binding does: `VAT` is BT-31/BT-48/BT-63, any other value BT-32
 
 v1.0.1 - 2026-09-07
