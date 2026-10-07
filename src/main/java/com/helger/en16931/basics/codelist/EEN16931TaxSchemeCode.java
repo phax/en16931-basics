@@ -22,6 +22,7 @@ import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasDisplayName;
+import com.helger.base.string.StringHelper;
 
 /**
  * The scheme identifier of the tax identifier of a party.
@@ -107,6 +108,27 @@ public enum EEN16931TaxSchemeCode implements IHasDisplayName
         if (e.m_sUBLCode.equals (sUBLCode))
           return e;
     return null;
+  }
+
+  /**
+   * Find the entry for a UBL tax scheme identifier the way the EN 16931:2017 UBL binding reads it.
+   * That binding only fixes BT-31-2/BT-48-2/BT-63-2 to <code>VAT</code> and accepts any other
+   * value for BT-32 - e.g. <code>CUST</code> or <code>TAX</code> - so everything that is not
+   * <code>VAT</code> is {@link #LOC}. Like the EN 16931 UBL Schematron, the comparison is case
+   * insensitive and ignores leading and trailing whitespace.
+   *
+   * @param sUBLCode
+   *        The UBL code to interpret. May be <code>null</code>.
+   * @return <code>null</code> if the code is <code>null</code> or empty.
+   * @since 1.0.2
+   */
+  @Nullable
+  public static EEN16931TaxSchemeCode getFromUBLCodeEN2017OrNull (@Nullable final String sUBLCode)
+  {
+    final String sTrimmed = StringHelper.trim (sUBLCode);
+    if (StringHelper.isEmpty (sTrimmed))
+      return null;
+    return VAT.m_sUBLCode.equalsIgnoreCase (sTrimmed) ? VAT : LOC;
   }
 
   /**

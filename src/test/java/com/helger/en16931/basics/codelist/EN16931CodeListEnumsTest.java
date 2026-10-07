@@ -189,6 +189,16 @@ public final class EN16931CodeListEnumsTest
     assertSame (EEN16931TaxSchemeCode.VAT, EEN16931TaxSchemeCode.getFromCIICodeOrNull ("VA"));
     assertNull (EEN16931TaxSchemeCode.getFromCIICodeOrNull ("VAT"));
 
+    // The 2017 UBL binding: VAT is BT-31, everything else BT-32
+    assertSame (EEN16931TaxSchemeCode.VAT, EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull ("VAT"));
+    assertSame (EEN16931TaxSchemeCode.VAT, EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull (" vat "));
+    assertSame (EEN16931TaxSchemeCode.LOC, EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull ("LOC"));
+    assertSame (EEN16931TaxSchemeCode.LOC, EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull ("CUST"));
+    assertSame (EEN16931TaxSchemeCode.LOC, EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull ("TAX"));
+    assertNull (EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull (null));
+    assertNull (EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull (""));
+    assertNull (EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull ("  "));
+
     // Here both syntaxes use the same code
     assertEquals ("VAT", EEN16931TaxCategorySchemeCode.VAT.getUBLCode ());
     assertEquals ("VAT", EEN16931TaxCategorySchemeCode.VAT.getCIICode ());

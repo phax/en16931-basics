@@ -188,6 +188,9 @@ mvn clean install
 
 # News and noteworthy
 
+v1.0.2 - work in progress
+* Added `EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull`, which reads a UBL tax scheme identifier the way the EN 16931:2017 binding does: `VAT` is BT-31/BT-48/BT-63, any other value BT-32
+
 v1.0.1 - 2026-09-07
 * Added `EEN16931TaxSchemeCode.LOC`, the BT-32 national tax registration pair UBL `LOC` / CII `FC`, so `mapTaxSchemeCodeUBLToCII` and `mapTaxSchemeCodeCIIToUBL` cover BT-32 as well as BT-31, BT-48 and BT-63
 * Added `EN16931CodeLists.CREDITOR_REFERENCE_SCHEME_ID` - the BT-90-1 scheme identifier `SEPA`, which is the only thing that tells BT-90 apart from the party identifiers BT-29, BT-46 and BT-60 in UBL
