@@ -17,15 +17,23 @@
  */
 package com.helger.en16931.basics.codelist;
 
+import java.util.Locale;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.name.IHasDisplayName;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 
 /**
  * UNTDID 4461 payment means codes.
@@ -38,8 +46,9 @@ import com.helger.collection.commons.ICommonsMap;
  *
  * @author Philip Helger
  */
+@Translatable
 @CodingStyleguideUnaware
-public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
+public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName, IHasDisplayText
 {
   /** <code>1</code> - Instrument not defined */
   _1 ("1", "Instrument not defined", null),
@@ -60,7 +69,7 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>9</code> - National or regional clearing */
   _9 ("9", "National or regional clearing", null),
   /** <code>10</code> - In cash */
-  _10 ("10", "In cash", null),
+  _10 ("10", "In cash", null, "Bar"),
   /** <code>11</code> - ACH savings credit reversal */
   _11 ("11", "ACH savings credit reversal", null),
   /** <code>12</code> - ACH savings debit reversal */
@@ -80,7 +89,7 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>19</code> - ACH demand corporate trade payment (CTP) credit */
   _19 ("19", "ACH demand corporate trade payment (CTP) credit", null),
   /** <code>20</code> - Cheque */
-  _20 ("20", "Cheque", null),
+  _20 ("20", "Cheque", null, "Scheck"),
   /** <code>21</code> - Banker's draft */
   _21 ("21", "Banker's draft", null),
   /** <code>22</code> - Certified banker's draft */
@@ -100,7 +109,7 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>29</code> - ACH demand corporate trade exchange (CTX) debit */
   _29 ("29", "ACH demand corporate trade exchange (CTX) debit", null),
   /** <code>30</code> - Credit transfer (non-SEPA) */
-  _30 ("30", "Credit transfer", "non-SEPA"),
+  _30 ("30", "Credit transfer", "non-SEPA", "Überweisung"),
   /** <code>31</code> - Debit transfer (non-SEPA) */
   _31 ("31", "Debit transfer", "non-SEPA"),
   /** <code>32</code> - ACH demand cash concentration/disbursement plus (CCD+) */
@@ -124,7 +133,7 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>41</code> - ACH savings cash concentration/disbursement plus (CCD+) */
   _41 ("41", "ACH savings cash concentration/disbursement plus (CCD+)", null),
   /** <code>42</code> - Payment to bank account */
-  _42 ("42", "Payment to bank account", null),
+  _42 ("42", "Payment to bank account", null, "Zahlung auf Bankkonto"),
   /** <code>43</code> - ACH savings cash concentration/disbursement plus (CCD+) */
   _43 ("43", "ACH savings cash concentration/disbursement plus (CCD+)", null),
   /** <code>44</code> - Accepted bill of exchange */
@@ -136,9 +145,9 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>47</code> - Home-banking debit transfer */
   _47 ("47", "Home-banking debit transfer", null),
   /** <code>48</code> - Bank card (Use for all payment cards) */
-  _48 ("48", "Bank card", "Use for all payment cards"),
+  _48 ("48", "Bank card", "Use for all payment cards", "Bankkarte"),
   /** <code>49</code> - Direct debit */
-  _49 ("49", "Direct debit", null),
+  _49 ("49", "Direct debit", null, "Lastschrift"),
   /** <code>50</code> - Payment by postgiro */
   _50 ("50", "Payment by postgiro", null),
   /** <code>51</code> - FR, norme 6 97-Telereglement CFONB (French Organisation for */
@@ -154,11 +163,11 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>56</code> - Bankgiro */
   _56 ("56", "Bankgiro", null),
   /** <code>57</code> - Standing agreement (Contractual payment means) */
-  _57 ("57", "Standing agreement", "Contractual payment means"),
+  _57 ("57", "Standing agreement", "Contractual payment means", "Daueranweisung"),
   /** <code>58</code> - SEPA credit transfer (SEPA) */
-  _58 ("58", "SEPA credit transfer", "SEPA"),
+  _58 ("58", "SEPA credit transfer", "SEPA", "SEPA-Überweisung"),
   /** <code>59</code> - SEPA direct debit (SEPA) */
-  _59 ("59", "SEPA direct debit", "SEPA"),
+  _59 ("59", "SEPA direct debit", "SEPA", "SEPA-Lastschrift"),
   /** <code>60</code> - Promissory note */
   _60 ("60", "Promissory note", null),
   /** <code>61</code> - Promissory note signed by the debtor */
@@ -204,7 +213,7 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   /** <code>96</code> - Requested method for payment was not used */
   _96 ("96", "Requested method for payment was not used", null),
   /** <code>97</code> - Clearing between partners */
-  _97 ("97", "Clearing between partners", null),
+  _97 ("97", "Clearing between partners", null, "Verrechnung zwischen Partnern"),
   /** <code>98</code> - JP, Electronically Recorded Monetary Claims */
   _98 ("98", "JP, Electronically Recorded Monetary Claims", null),
   /** <code>ZZZ</code> - Mutually defined */
@@ -220,14 +229,32 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
 
   private final String m_sID;
   private final String m_sDisplayName;
+  private final IMultilingualText m_aTP;
   private final String m_sUsage;
 
   EEN16931PaymentMeansCode (@NonNull @Nonempty final String sID,
                             @NonNull @Nonempty final String sDisplayName,
                             @Nullable final String sUsage)
   {
+    this (sID, sDisplayName, sUsage, TextHelper.create_EN (sDisplayName));
+  }
+
+  EEN16931PaymentMeansCode (@NonNull @Nonempty final String sID,
+                            @NonNull @Nonempty final String sDisplayName,
+                            @Nullable final String sUsage,
+                            @NonNull @Nonempty final String sDisplayNameDE)
+  {
+    this (sID, sDisplayName, sUsage, TextHelper.create_DE_EN (sDisplayNameDE, sDisplayName));
+  }
+
+  private EEN16931PaymentMeansCode (@NonNull @Nonempty final String sID,
+                                    @NonNull @Nonempty final String sDisplayName,
+                                    @Nullable final String sUsage,
+                                    @NonNull final IMultilingualText aTP)
+  {
     m_sID = sID;
     m_sDisplayName = sDisplayName;
+    m_aTP = aTP;
     m_sUsage = sUsage;
   }
 
@@ -249,6 +276,24 @@ public enum EEN16931PaymentMeansCode implements IHasID <String>, IHasDisplayName
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  /**
+   * Get the name of the code in the language of the passed locale. English is the fall back
+   * language.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language or the English name. Neither <code>null</code> nor
+   *         empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getDisplayText (@NonNull final Locale aContentLocale)
+  {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    return ret != null ? ret : m_sDisplayName;
   }
 
   /**

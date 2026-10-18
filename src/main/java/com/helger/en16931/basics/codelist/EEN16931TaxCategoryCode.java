@@ -17,15 +17,23 @@
  */
 package com.helger.en16931.basics.codelist;
 
+import java.util.Locale;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.name.IHasDisplayName;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 
 /**
  * UNTDID 5305 duty or tax or fee category codes.
@@ -38,29 +46,30 @@ import com.helger.collection.commons.ICommonsMap;
  *
  * @author Philip Helger
  */
+@Translatable
 @CodingStyleguideUnaware
-public enum EEN16931TaxCategoryCode implements IHasID <String>, IHasDisplayName
+public enum EEN16931TaxCategoryCode implements IHasID <String>, IHasDisplayName, IHasDisplayText
 {
   /** <code>S</code> - Standard rate */
-  S ("S", "Standard rate", "Standard rate"),
+  S ("S", "Standard rate", "Standard rate", "Regelsteuersatz"),
   /** <code>Z</code> - Zero rated goods */
-  Z ("Z", "Zero rated goods", "Zero rated goods"),
+  Z ("Z", "Zero rated goods", "Zero rated goods", "Steuersatz Null"),
   /** <code>E</code> - Exempt from tax */
-  E ("E", "Exempt from tax", "Exempt from tax"),
+  E ("E", "Exempt from tax", "Exempt from tax", "USt-befreit"),
   /** <code>AE</code> - VAT Reverse charge */
-  AE ("AE", "VAT Reverse charge", "VAT reverse charge"),
+  AE ("AE", "VAT Reverse charge", "VAT reverse charge", "Umkehrung der Steuerschuldnerschaft"),
   /** <code>K</code> - VAT exempt for EEA intra-community supply of goods and services */
   K ("K",
      "VAT exempt for EEA intra-community supply of goods and services",
-     "VAT exempt for intra community supply of goods"),
+     "VAT exempt for intra community supply of goods", "USt-befreit für innergemeinschaftliche EWR-Lieferung"),
   /** <code>G</code> - Free export item, tax not charged */
-  G ("G", "Free export item, tax not charged", "Free export item, tax not charged"),
+  G ("G", "Free export item, tax not charged", "Free export item, tax not charged", "Freier Ausfuhrartikel, USt nicht berechnet"),
   /** <code>O</code> - Service outside scope of tax */
-  O ("O", "Service outside scope of tax", "Services outside scope of tax"),
+  O ("O", "Service outside scope of tax", "Services outside scope of tax", "Außerhalb des USt-Geltungsbereichs"),
   /** <code>L</code> - Canary Islands general indirect tax */
-  L ("L", "Canary Islands general indirect tax", "Canary Islands General Indirect Tax"),
+  L ("L", "Canary Islands general indirect tax", "Canary Islands General Indirect Tax", "Kanarische Inseln IGIC"),
   /** <code>M</code> - Tax for production, services and importation in Ceuta and Melilla */
-  M ("M", "Tax for production, services and importation in Ceuta and Melilla", "Liable for IPSI");
+  M ("M", "Tax for production, services and importation in Ceuta and Melilla", "Liable for IPSI", "Ceuta und Melilla IPSI");
 
   private static final ICommonsMap <String, EEN16931TaxCategoryCode> MAP_BY_ID = new CommonsHashMap <> ();
 
@@ -72,14 +81,32 @@ public enum EEN16931TaxCategoryCode implements IHasID <String>, IHasDisplayName
 
   private final String m_sID;
   private final String m_sDisplayName;
+  private final IMultilingualText m_aTP;
   private final String m_sSemanticModelName;
 
   EEN16931TaxCategoryCode (@NonNull @Nonempty final String sID,
                            @NonNull @Nonempty final String sDisplayName,
                            @NonNull @Nonempty final String sSemanticModelName)
   {
+    this (sID, sDisplayName, sSemanticModelName, TextHelper.create_EN (sDisplayName));
+  }
+
+  EEN16931TaxCategoryCode (@NonNull @Nonempty final String sID,
+                           @NonNull @Nonempty final String sDisplayName,
+                           @NonNull @Nonempty final String sSemanticModelName,
+                           @NonNull @Nonempty final String sDisplayNameDE)
+  {
+    this (sID, sDisplayName, sSemanticModelName, TextHelper.create_DE_EN (sDisplayNameDE, sDisplayName));
+  }
+
+  private EEN16931TaxCategoryCode (@NonNull @Nonempty final String sID,
+                                   @NonNull @Nonempty final String sDisplayName,
+                                   @NonNull @Nonempty final String sSemanticModelName,
+                                   @NonNull final IMultilingualText aTP)
+  {
     m_sID = sID;
     m_sDisplayName = sDisplayName;
+    m_aTP = aTP;
     m_sSemanticModelName = sSemanticModelName;
   }
 
@@ -101,6 +128,24 @@ public enum EEN16931TaxCategoryCode implements IHasID <String>, IHasDisplayName
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  /**
+   * Get the name of the code in the language of the passed locale. English is the fall back
+   * language.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language or the English name. Neither <code>null</code> nor
+   *         empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getDisplayText (@NonNull final Locale aContentLocale)
+  {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    return ret != null ? ret : m_sDisplayName;
   }
 
   /**

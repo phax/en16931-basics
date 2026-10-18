@@ -122,6 +122,9 @@ reason. Do not generate them again - not split by recommendation, not with fewer
 arguments. If BT-130 and BT-150 ever need validating here, it has to be a `Set <String>` or a
 resource file, not an enum.
 
+That resource-file variant now exists as `UnitCodes` in the project `ph-codelists` (module
+`ph-codelists-unit`, same data from the `Unit` sheet). It is deliberately not a dependency of this artefact.
+
 Traps that cost five rounds to find in cii2ubl:
 
 - An extract with **55 codes is a 2024 snapshot**. `471 472 473 500 501` (Invoice) and `502 503`

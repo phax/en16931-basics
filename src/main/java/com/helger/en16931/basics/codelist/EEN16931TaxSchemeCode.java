@@ -17,12 +17,20 @@
  */
 package com.helger.en16931.basics.codelist;
 
+import java.util.Locale;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.name.IHasDisplayName;
 import com.helger.base.string.StringHelper;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 
 /**
  * The scheme identifier of the tax identifier of a party.
@@ -38,7 +46,8 @@ import com.helger.base.string.StringHelper;
  *
  * @author Philip Helger
  */
-public enum EEN16931TaxSchemeCode implements IHasDisplayName
+@Translatable
+public enum EEN16931TaxSchemeCode implements IHasDisplayName, IHasDisplayText
 {
   /** UBL <code>VAT</code>, CII <code>VA</code> - Value added tax */
   VAT ("VAT", "VA", "Value added tax"),
@@ -54,6 +63,7 @@ public enum EEN16931TaxSchemeCode implements IHasDisplayName
   private final String m_sUBLCode;
   private final String m_sCIICode;
   private final String m_sDisplayName;
+  private final IMultilingualText m_aTP;
 
   EEN16931TaxSchemeCode (@NonNull @Nonempty final String sUBLCode,
                          @NonNull @Nonempty final String sCIICode,
@@ -62,6 +72,7 @@ public enum EEN16931TaxSchemeCode implements IHasDisplayName
     m_sUBLCode = sUBLCode;
     m_sCIICode = sCIICode;
     m_sDisplayName = sDisplayName;
+    m_aTP = TextHelper.create_EN (sDisplayName);
   }
 
   /**
@@ -91,6 +102,24 @@ public enum EEN16931TaxSchemeCode implements IHasDisplayName
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  /**
+   * Get the name of the code in the language of the passed locale. English is the fall back
+   * language.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language or the English name. Neither <code>null</code> nor
+   *         empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getDisplayText (@NonNull final Locale aContentLocale)
+  {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    return ret != null ? ret : m_sDisplayName;
   }
 
   /**

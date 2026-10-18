@@ -17,13 +17,21 @@
  */
 package com.helger.en16931.basics.codelist;
 
+import java.util.Locale;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.name.IHasDisplayName;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 
 /**
  * The interpretation EN 16931 puts on a UNTDID 1001 document type code of BT-3. This is the
@@ -32,20 +40,25 @@ import com.helger.base.name.IHasDisplayName;
  *
  * @author Philip Helger
  */
-public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayName
+@Translatable
+public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayName, IHasDisplayText
 {
   /** The document type code identifies an Invoice */
-  INVOICE ("invoice", "Invoice"),
+  INVOICE ("invoice", "Invoice", "Rechnung"),
   /** The document type code identifies a Credit Note */
-  CREDIT_NOTE ("credit-note", "Credit Note");
+  CREDIT_NOTE ("credit-note", "Credit Note", "Gutschrift");
 
   private final String m_sID;
   private final String m_sDisplayName;
+  private final IMultilingualText m_aTP;
 
-  EEN16931InvoiceTypeCodeRole (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
+  EEN16931InvoiceTypeCodeRole (@NonNull @Nonempty final String sID,
+                               @NonNull @Nonempty final String sDisplayName,
+                               @NonNull @Nonempty final String sDisplayNameDE)
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;
+    m_aTP = TextHelper.create_DE_EN (sDisplayNameDE, sDisplayName);
   }
 
   @NonNull
@@ -64,6 +77,24 @@ public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayN
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  /**
+   * Get the name of the role in the language of the passed locale. English is the fall back
+   * language.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language or the English name. Neither <code>null</code> nor
+   *         empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getDisplayText (@NonNull final Locale aContentLocale)
+  {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    return ret != null ? ret : m_sDisplayName;
   }
 
   @Nullable

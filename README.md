@@ -122,6 +122,11 @@ helpers on top of them.
 | BT-125-1 | Mime codes | `EEN16931MimeCode` |
 | BT-158-1 | UNTDID 7143 Item type identification code | `EEN16931ItemTypeCode` |
 
+Every enum with a name also offers `getDisplayText (Locale)`, which returns the name in the language of
+the locale and the English name if there is no translation (`getDisplayName ()` is always English).
+German names exist for the VAT categories, the payment means and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
+names of the JDK; everything else, including the invoice type codes, is English only.
+
 Every one of them carries `getID()` — the code as spelled in the workbook — plus everything else the
 sheet has to say about the code, and offers a `getFromIDOrNull(String)` and a `containsID(String)`
 backed by a map, so a lookup does not scan the list:
@@ -145,8 +150,8 @@ and offer `getUBLCode()` / `getCIICode()` instead of a single `getID()`.
 
 **The unit codes of BT-130 and BT-150 are not among them.** UN/ECE Recommendation N°20 and N°21
 together are 2162 codes, and an enum of that size does not compile: the static initializer exceeds
-the 65535 byte limit the JVM puts on a single method. Validate a unit code against
-[ph-masterdata](https://github.com/phax/ph-masterdata) or the UN/ECE lists directly.
+the 65535 byte limit the JVM puts on a single method. Use `UnitCodes` of
+[ph-codelists-unit](https://github.com/phax/ph-codelists) to validate a unit code and to get its name.
 
 ## The classifying helpers
 
@@ -187,6 +192,12 @@ mvn clean install
 ```
 
 # News and noteworthy
+
+v1.0.3 - work in progress
+* The code list enums that have a name (all but `EEN16931DueDateTypeCode` and `EEN16931MimeCode`) implement `IHasDisplayText` of ph-text: `getDisplayText (Locale)` returns the name in the language of the locale and falls back to the English name, which stays available as `getDisplayName ()`. Texts can be overridden with the properties files of the ph-text `DefaultTextResolver`
+* German names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode` and `EEN16931InvoiceTypeCodeRole`; the names of countries and currencies come from the JDK in the language of the locale. All other lists are English only
+* New dependency on `ph-text`
+* The unit codes of BT-130 and BT-150 are available in the new project [ph-codelists](https://github.com/phax/ph-codelists) (`ph-codelists-unit`)
 
 v1.0.2 - 2026-10-07
 * Added `EEN16931TaxSchemeCode.getFromUBLCodeEN2017OrNull`, which reads a UBL tax scheme identifier the way the EN 16931:2017 binding does: `VAT` is BT-31/BT-48/BT-63, any other value BT-32

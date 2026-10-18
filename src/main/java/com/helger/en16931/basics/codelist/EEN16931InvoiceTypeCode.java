@@ -17,15 +17,23 @@
  */
 package com.helger.en16931.basics.codelist;
 
+import java.util.Locale;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.name.IHasDisplayName;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 
 /**
  * UNTDID 1001 document type codes.
@@ -43,8 +51,9 @@ import com.helger.collection.commons.ICommonsMap;
  *
  * @author Philip Helger
  */
+@Translatable
 @CodingStyleguideUnaware
-public enum EEN16931InvoiceTypeCode implements IHasID <String>, IHasDisplayName
+public enum EEN16931InvoiceTypeCode implements IHasID <String>, IHasDisplayName, IHasDisplayText
 {
   /** <code>71</code> - Request for payment (Invoice) */
   _71 ("71", "Request for payment", EEN16931InvoiceTypeCodeRole.INVOICE),
@@ -187,6 +196,7 @@ public enum EEN16931InvoiceTypeCode implements IHasID <String>, IHasDisplayName
 
   private final String m_sID;
   private final String m_sDisplayName;
+  private final IMultilingualText m_aTP;
   private final EEN16931InvoiceTypeCodeRole m_eRole;
 
   EEN16931InvoiceTypeCode (@NonNull @Nonempty final String sID,
@@ -195,6 +205,7 @@ public enum EEN16931InvoiceTypeCode implements IHasID <String>, IHasDisplayName
   {
     m_sID = sID;
     m_sDisplayName = sDisplayName;
+    m_aTP = TextHelper.create_EN (sDisplayName);
     m_eRole = eRole;
   }
 
@@ -216,6 +227,24 @@ public enum EEN16931InvoiceTypeCode implements IHasID <String>, IHasDisplayName
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  /**
+   * Get the name of the code in the language of the passed locale. English is the fall back
+   * language.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language or the English name. Neither <code>null</code> nor
+   *         empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getDisplayText (@NonNull final Locale aContentLocale)
+  {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    return ret != null ? ret : m_sDisplayName;
   }
 
   /**
