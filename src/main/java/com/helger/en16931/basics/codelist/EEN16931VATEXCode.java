@@ -44,6 +44,15 @@ import com.helger.text.util.TextHelper;
  * differ from the VATEX code list proper. The correction requires a non backwards compatible change
  * and is postponed to November 2026. The names below are the ones of the workbook.
  * <p>
+ * <b>Case-insensitive lookup.</b> The validation artefacts compare the VATEX codes without regard to
+ * the case, so {@link #getFromIDOrNull(String)} and {@link #containsID(String)} do the same:
+ * <code>vatex-eu-ae</code> is {@link #VATEX_EU_AE}. The references are the CEN Schematron rule
+ * <b>BR-CL-22</b> (<code>CEN-EN16931-UBL.sch</code> and its CII counterpart), which checks
+ * <code>concat(' ', normalize-space(upper-case(.)), ' ')</code> against the upper case code list, and
+ * the Peppol rules <b>PEPPOL-EN16931-P0104</b> and following, which select the tax category by
+ * <code>upper-case(cbc:TaxExemptionReasonCode)</code>. All codes of this list are upper case. The
+ * Schematron also trims the value (<code>normalize-space</code>); that is not done here.
+ * <p>
  * Source of truth: sheet <code>VATEX</code> of the EN 16931 code list workbook. The implemented
  * version of that workbook is {@link EN16931CodeLists#CODE_LIST_VERSION}, and the registry it comes
  * from is named in {@link EN16931CodeLists}.
@@ -647,7 +656,8 @@ public enum EEN16931VATEXCode implements IHasID <String>, IHasDisplayName, IHasD
   }
 
   /**
-   * Find the code list entry with the provided code.
+   * Find the code list entry with the provided code. The case is ignored, like in rule BR-CL-22 of
+   * the CEN Schematron, which compares <code>upper-case(.)</code> - see the class comment.
    *
    * @param sID
    *        The code to search. May be <code>null</code>.
@@ -656,11 +666,13 @@ public enum EEN16931VATEXCode implements IHasID <String>, IHasDisplayName, IHasD
   @Nullable
   public static EEN16931VATEXCode getFromIDOrNull (@Nullable final String sID)
   {
-    return MAP_BY_ID.get (sID);
+    // All IDs are upper case, so one upper case lookup finds every spelling
+    return sID == null ? null : MAP_BY_ID.get (sID.toUpperCase (Locale.ROOT));
   }
 
   /**
-   * Check if the provided code is part of this code list.
+   * Check if the provided code is part of this code list. The case is ignored, see
+   * {@link #getFromIDOrNull(String)}.
    *
    * @param sID
    *        The code to check. May be <code>null</code>.
@@ -668,6 +680,6 @@ public enum EEN16931VATEXCode implements IHasID <String>, IHasDisplayName, IHasD
    */
   public static boolean containsID (@Nullable final String sID)
   {
-    return MAP_BY_ID.containsKey (sID);
+    return getFromIDOrNull (sID) != null;
   }
 }

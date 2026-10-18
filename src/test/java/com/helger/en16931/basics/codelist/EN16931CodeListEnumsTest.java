@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
 import java.util.function.Function;
 
 import org.junit.Test;
@@ -240,5 +241,21 @@ public final class EN16931CodeListEnumsTest
     assertNotNull (EEN16931VATEXCode.getFromIDOrNull ("VATEX-EU-D"));
     // Most codes carry no remark
     assertNull (EEN16931VATEXCode.VATEX_EU_132.getRemark ());
+  }
+
+  @Test
+  public void testVATEXIsCaseInsensitive ()
+  {
+    // BR-CL-22 of the CEN Schematron compares upper-case(.), the Peppol rules upper-case(cbc:TaxExemptionReasonCode)
+    assertSame (EEN16931VATEXCode.VATEX_EU_AE, EEN16931VATEXCode.getFromIDOrNull ("VATEX-EU-AE"));
+    assertSame (EEN16931VATEXCode.VATEX_EU_AE, EEN16931VATEXCode.getFromIDOrNull ("vatex-eu-ae"));
+    assertSame (EEN16931VATEXCode.VATEX_EU_AE, EEN16931VATEXCode.getFromIDOrNull ("Vatex-Eu-Ae"));
+    assertTrue (EEN16931VATEXCode.containsID ("vatex-eu-132-1a"));
+    assertFalse (EEN16931VATEXCode.containsID ("VATEX-EU-XX"));
+    assertFalse (EEN16931VATEXCode.containsID (null));
+    assertNull (EEN16931VATEXCode.getFromIDOrNull (null));
+    // The single upper case lookup relies on this
+    for (final EEN16931VATEXCode e : EEN16931VATEXCode.values ())
+      assertEquals (e.getID (), e.getID ().toUpperCase (Locale.ROOT));
   }
 }
