@@ -84,7 +84,7 @@ public final class EN16931CodeListEnumsTest
   {
     _assertCodeList (251, EEN16931CountryCode.values (), EEN16931CountryCode::getFromIDOrNull);
     _assertCodeList (178, EEN16931CurrencyCode.values (), EEN16931CurrencyCode::getFromIDOrNull);
-    _assertCodeList (243, EEN16931ICDCode.values (), EEN16931ICDCode::getFromIDOrNull);
+    _assertCodeList (246, EEN16931ICDCode.values (), EEN16931ICDCode::getFromIDOrNull);
     _assertCodeList (62, EEN16931InvoiceTypeCode.values (), EEN16931InvoiceTypeCode::getFromIDOrNull);
     _assertCodeList (818, EEN16931ReferenceQualifierCode.values (), EEN16931ReferenceQualifierCode::getFromIDOrNull);
     _assertCodeList (401, EEN16931TextSubjectCode.values (), EEN16931TextSubjectCode::getFromIDOrNull);
@@ -94,8 +94,8 @@ public final class EN16931CodeListEnumsTest
     _assertCodeList (185, EEN16931ItemTypeCode.values (), EEN16931ItemTypeCode::getFromIDOrNull);
     _assertCodeList (178, EEN16931ChargeReasonCode.values (), EEN16931ChargeReasonCode::getFromIDOrNull);
     _assertCodeList (6, EEN16931MimeCode.values (), EEN16931MimeCode::getFromIDOrNull);
-    _assertCodeList (102, EEN16931EASCode.values (), EEN16931EASCode::getFromIDOrNull);
-    _assertCodeList (88, EEN16931VATEXCode.values (), EEN16931VATEXCode::getFromIDOrNull);
+    _assertCodeList (103, EEN16931EASCode.values (), EEN16931EASCode::getFromIDOrNull);
+    _assertCodeList (106, EEN16931VATEXCode.values (), EEN16931VATEXCode::getFromIDOrNull);
     _assertCodeList (1, EEN16931TaxRegistrationCode.values (), EEN16931TaxRegistrationCode::getFromIDOrNull);
     // The unit codes of BT-130 and BT-150 are deliberately not an enum - see EN16931CodeLists
   }
@@ -128,6 +128,11 @@ public final class EN16931CodeListEnumsTest
       assertNotNull (sCode, EEN16931ICDCode.getFromIDOrNull (sCode));
     for (final String sCode : new String [] { "0242", "0245", "0246", "0248" })
       assertNotNull (sCode, EEN16931EASCode.getFromIDOrNull (sCode));
+
+    // Added in v18
+    for (final String sCode : new String [] { "0249", "0250", "0251" })
+      assertNotNull (sCode, EEN16931ICDCode.getFromIDOrNull (sCode));
+    assertNotNull (EEN16931EASCode.getFromIDOrNull ("9960"));
 
     // The EAS list is a subset of the ICD list plus a few non numeric schemes
     assertNotNull (EEN16931EASCode.AS);

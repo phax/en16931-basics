@@ -38,14 +38,14 @@ public final class EN16931CodeListsTest
   @Test
   public void testCodeListVersion ()
   {
-    assertEquals ("v17b", EN16931CodeLists.CODE_LIST_VERSION);
-    assertEquals (PDTFactory.createLocalDate (2026, Month.MAY, 15), EN16931CodeLists.CODE_LIST_EFFECTIVE_DATE);
+    assertEquals ("v18", EN16931CodeLists.CODE_LIST_VERSION);
+    assertEquals (PDTFactory.createLocalDate (2026, Month.NOVEMBER, 15), EN16931CodeLists.CODE_LIST_EFFECTIVE_DATE);
   }
 
   @Test
   public void testInvoiceTypeCodeCount ()
   {
-    // Workbook "EN16931 code lists values v17b", sheet "1001": 62 codes, 49 Invoice and 13 Credit
+    // Workbook "EN16931 code lists values v18", sheet "1001": 62 codes, 49 Invoice and 13 Credit
     // Note. If one of these numbers changes, a new version of the workbook was transcribed.
     assertEquals (49, EN16931CodeLists.INVOICE_TYPE_CODES.size ());
     assertEquals (13, EN16931CodeLists.CREDIT_NOTE_TYPE_CODES.size ());

@@ -67,10 +67,10 @@ public final class EN16931CodeLists
    * The version of the EN 16931 code list workbook that this class implements. Consumers can report
    * this value to state what they are based on.
    */
-  public static final String CODE_LIST_VERSION = "v17b";
+  public static final String CODE_LIST_VERSION = "v18";
 
   /** The date from which {@link #CODE_LIST_VERSION} is to be used */
-  public static final LocalDate CODE_LIST_EFFECTIVE_DATE = PDTFactory.createLocalDate (2026, Month.MAY, 15);
+  public static final LocalDate CODE_LIST_EFFECTIVE_DATE = PDTFactory.createLocalDate (2026, Month.NOVEMBER, 15);
 
   // BT-3 Invoice type code, UNTDID 1001, as a subset of 62 codes each classified as either an
   // Invoice or a Credit Note. No code appears in both roles.

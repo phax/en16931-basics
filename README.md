@@ -94,8 +94,8 @@ EEN16931Edition.getFromSpecificationIdentifierOrNull ("urn:cen.eu:en16931:2017#c
 
 # The code lists
 
-The source of truth for everything below is the workbook `EN16931 code lists values v17b - used
-from 2026-05-15` of the
+The source of truth for everything below is the workbook `EN16931 code lists values v18 - used
+from 2026-11-15` of the
 [Registry of supporting artefacts to implement EN 16931](https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108974/Registry+of+supporting+artefacts+to+implement+EN16931#RegistryofsupportingartefactstoimplementEN16931-CEN/TC434EN16931).
 Every sheet of that workbook is available as an enum, and `EN16931CodeLists` adds the classifying
 helpers on top of them.
@@ -194,9 +194,13 @@ mvn clean install
 # News and noteworthy
 
 v1.0.3 - work in progress
-* `EEN16931VATEXCode.getFromIDOrNull` and `containsID` ignore the case of the code, like the validation artefacts do: rule BR-CL-22 of the CEN Schematron compares `upper-case(.)` and the Peppol rules PEPPOL-EN16931-P0104 and following compare `upper-case(cbc:TaxExemptionReasonCode)`. `vatex-eu-ae` is now `VATEX_EU_AE`
-* The code list enums that have a name (all but `EEN16931DueDateTypeCode` and `EEN16931MimeCode`) implement `IHasDisplayText` of ph-text: `getDisplayText (Locale)` returns the name in the language of the locale and falls back to the English name, which stays available as `getDisplayName ()`. Texts can be overridden with the properties files of the ph-text `DefaultTextResolver`
-* German names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode` and `EEN16931InvoiceTypeCodeRole`; the names of countries and currencies come from the JDK in the language of the locale. All other lists are English only
+* `EEN16931VATEXCode.getFromIDOrNull` and `containsID` ignore the case of the code, like the validation artefacts do: rule BR-CL-22 of the CEN Schematron compares `upper-case(.)` and the Peppol rules PEPPOL-EN16931-P0104 and following compare `upper-case(cbc:TaxExemptionReasonCode)`.
+  `vatex-eu-ae` is now `VATEX_EU_AE`
+* The code list enums that have a name (all but `EEN16931DueDateTypeCode` and `EEN16931MimeCode`) implement `IHasDisplayText` of ph-text: `getDisplayText (Locale)` returns the name in the language of the locale and falls back to the English name, which stays available as `getDisplayName ()`.
+  Texts can be overridden with the properties files of the ph-text `DefaultTextResolver`
+* German names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode` and `EEN16931InvoiceTypeCodeRole`; the names of countries and currencies come from the JDK in the language of the locale.
+  All other lists are English only
+* Updated the code lists to `v18` (used from 2026-11-15): new EAS code `9960`, new ICD codes `0249` to `0251` and 18 Spanish `VATEX-ES-*` codes
 * New dependency on `ph-text`
 * The unit codes of BT-130 and BT-150 are available in the new project [ph-codelists](https://github.com/phax/ph-codelists) (`ph-codelists-unit`)
 

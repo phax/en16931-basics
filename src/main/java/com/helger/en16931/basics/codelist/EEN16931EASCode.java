@@ -260,6 +260,8 @@ public enum EEN16931EASCode implements IHasID <String>, IHasDisplayName, IHasDis
   _9957 ("9957", "French VAT number"),
   /** <code>9959</code> - Employer Identification Number (EIN, USA) */
   _9959 ("9959", "Employer Identification Number (EIN, USA)"),
+  /** <code>9960</code> - Taiwan Unified Business Number (UBN) */
+  _9960 ("9960", "Taiwan Unified Business Number (UBN)"),
   /** <code>AN</code> - O.F.T.P. (ODETTE File Transfer Protocol) */
   AN ("AN", "O.F.T.P. (ODETTE File Transfer Protocol)"),
   /** <code>AQ</code> - X.400 address for mail text */

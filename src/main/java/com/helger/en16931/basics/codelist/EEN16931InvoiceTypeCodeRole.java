@@ -53,12 +53,12 @@ public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayN
   private final IMultilingualText m_aTP;
 
   EEN16931InvoiceTypeCodeRole (@NonNull @Nonempty final String sID,
-                               @NonNull @Nonempty final String sDisplayName,
+                               @NonNull @Nonempty final String sDisplayNameEN,
                                @NonNull @Nonempty final String sDisplayNameDE)
   {
     m_sID = sID;
-    m_sDisplayName = sDisplayName;
-    m_aTP = TextHelper.create_DE_EN (sDisplayNameDE, sDisplayName);
+    m_sDisplayName = sDisplayNameEN;
+    m_aTP = TextHelper.create_DE_EN (sDisplayNameDE, sDisplayNameEN);
   }
 
   @NonNull

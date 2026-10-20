@@ -81,7 +81,7 @@ those objects are typed to a JAXB model this artefact does not depend on.
 ## The code lists
 
 The code lists are the valuable part of this artefact and the part that is easiest to get wrong.
-The source of truth is the workbook `EN16931 code lists values v17b - used from 2026-05-15.xlsx`
+The source of truth is the workbook `EN16931 code lists values v18 - used from 2026-11-15.xlsx`
 from the [EN 16931 registry of supporting
 artefacts](https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108974/Registry+of+supporting+artefacts+to+implement+EN16931#RegistryofsupportingartefactstoimplementEN16931-CEN/TC434EN16931).
 Philip keeps every released version of that workbook in

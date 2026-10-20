@@ -592,7 +592,13 @@ public enum EEN16931ICDCode implements IHasID <String>, IHasDisplayName, IHasDis
   /** <code>0247</code> - Name unknown */
   _0247 ("0247", "Name unknown"),
   /** <code>0248</code> - Oman Value Added Tax Identification Number (VATIN) */
-  _0248 ("0248", "Oman Value Added Tax Identification Number (VATIN)");
+  _0248 ("0248", "Oman Value Added Tax Identification Number (VATIN)"),
+  /** <code>0249</code> - The Chamber of Commerce &amp; Industry St. Eustatius &amp; Saba establishment number */
+  _0249 ("0249", "The Chamber of Commerce & Industry St. Eustatius & Saba establishment number"),
+  /** <code>0250</code> - SECD - Siemens Energy Classification Dictionary */
+  _0250 ("0250", "SECD - Siemens Energy Classification Dictionary"),
+  /** <code>0251</code> - The Bonaire Chamber of Commerce and Industry establishment number. */
+  _0251 ("0251", "The Bonaire Chamber of Commerce and Industry establishment number.");
 
   private static final ICommonsMap <String, EEN16931ICDCode> MAP_BY_ID = new CommonsHashMap <> ();
 
