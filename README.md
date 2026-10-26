@@ -193,7 +193,7 @@ mvn clean install
 
 # News and noteworthy
 
-v1.0.3 - work in progress
+v1.0.3 - 2026-10-26
 * `EEN16931VATEXCode.getFromIDOrNull` and `containsID` ignore the case of the code, like the validation artefacts do: rule BR-CL-22 of the CEN Schematron compares `upper-case(.)` and the Peppol rules PEPPOL-EN16931-P0104 and following compare `upper-case(cbc:TaxExemptionReasonCode)`.
   `vatex-eu-ae` is now `VATEX_EU_AE`
 * The code list enums that have a name (all but `EEN16931DueDateTypeCode` and `EEN16931MimeCode`) implement `IHasDisplayText` of ph-text: `getDisplayText (Locale)` returns the name in the language of the locale and falls back to the English name, which stays available as `getDisplayName ()`.
