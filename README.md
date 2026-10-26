@@ -124,7 +124,7 @@ helpers on top of them.
 
 Every enum with a name also offers `getDisplayText (Locale)`, which returns the name in the language of
 the locale and the English name if there is no translation (`getDisplayName ()` is always English).
-German names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
+German, Spanish and French names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
 names of the JDK; everything else is English only.
 
 Every one of them carries `getID()` — the code as spelled in the workbook — plus everything else the
@@ -192,6 +192,9 @@ mvn clean install
 ```
 
 # News and noteworthy
+
+v1.0.4 - work in progress
+* Spanish and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists. They are kept in the resource files `properties/es.properties` and `properties/fr.properties` and resolved by the ph-text `DefaultTextResolver`
 
 v1.0.3 - 2026-10-26
 * `EEN16931VATEXCode.getFromIDOrNull` and `containsID` ignore the case of the code, like the validation artefacts do: rule BR-CL-22 of the CEN Schematron compares `upper-case(.)` and the Peppol rules PEPPOL-EN16931-P0104 and following compare `upper-case(cbc:TaxExemptionReasonCode)`.
