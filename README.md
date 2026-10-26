@@ -124,8 +124,8 @@ helpers on top of them.
 
 Every enum with a name also offers `getDisplayText (Locale)`, which returns the name in the language of
 the locale and the English name if there is no translation (`getDisplayName ()` is always English).
-German names exist for the VAT categories, the payment means and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
-names of the JDK; everything else, including the invoice type codes, is English only.
+German names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
+names of the JDK; everything else is English only.
 
 Every one of them carries `getID()` — the code as spelled in the workbook — plus everything else the
 sheet has to say about the code, and offers a `getFromIDOrNull(String)` and a `containsID(String)`
@@ -198,7 +198,7 @@ v1.0.3 - work in progress
   `vatex-eu-ae` is now `VATEX_EU_AE`
 * The code list enums that have a name (all but `EEN16931DueDateTypeCode` and `EEN16931MimeCode`) implement `IHasDisplayText` of ph-text: `getDisplayText (Locale)` returns the name in the language of the locale and falls back to the English name, which stays available as `getDisplayName ()`.
   Texts can be overridden with the properties files of the ph-text `DefaultTextResolver`
-* German names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode` and `EEN16931InvoiceTypeCodeRole`; the names of countries and currencies come from the JDK in the language of the locale.
+* German names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`; the names of countries and currencies come from the JDK in the language of the locale.
   All other lists are English only
 * Updated the code lists to `v18` (used from 2026-11-15): new EAS code `9960`, new ICD codes `0249` to `0251` and 18 Spanish `VATEX-ES-*` codes
 * New dependency on `ph-text`

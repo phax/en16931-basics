@@ -18,6 +18,7 @@
 package com.helger.en16931.basics.codelist;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Locale;
@@ -51,6 +52,16 @@ public final class EN16931DisplayTextTest
   }
 
   @Test
+  public void testInvoiceTypeCodes ()
+  {
+    assertEquals ("Handelsrechnung", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.GERMAN));
+    assertEquals ("Gutschrift", EEN16931InvoiceTypeCode._381.getDisplayText (Locale.GERMANY));
+    assertEquals ("Commercial invoice", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.ENGLISH));
+    for (final EEN16931InvoiceTypeCode e : EEN16931InvoiceTypeCode.values ())
+      assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (Locale.GERMAN));
+  }
+
+  @Test
   public void testEnglishIsTheFallBack ()
   {
     for (final Locale aLocale : new Locale [] { Locale.ENGLISH, Locale.US, Locale.FRENCH, Locale.ROOT })
@@ -58,9 +69,8 @@ public final class EN16931DisplayTextTest
       assertEquals ("Standard rate", EEN16931TaxCategoryCode.S.getDisplayText (aLocale));
       assertEquals ("SEPA credit transfer", EEN16931PaymentMeansCode._58.getDisplayText (aLocale));
     }
+    assertEquals ("Commercial invoice", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.FRENCH));
     // Code lists without a translation
-    assertEquals (EEN16931InvoiceTypeCode._380.getDisplayName (),
-                  EEN16931InvoiceTypeCode._380.getDisplayText (Locale.GERMAN));
     assertEquals (EEN16931AllowanceReasonCode._100.getDisplayName (),
                   EEN16931AllowanceReasonCode._100.getDisplayText (Locale.GERMAN));
   }
