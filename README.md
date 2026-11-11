@@ -194,7 +194,7 @@ mvn clean install
 
 # News and noteworthy
 
-v1.0.5 - work in progress
+v1.0.5 - 2026-11-11
 * Corrected 13 of the Spanish names in `properties/es.properties`, following the wording of the Spanish VAT act and the Spanish Commercial Code.
   See [PR #1](https://github.com/phax/en16931-basics/pull/1) - thanks to @greedwhale
 * Added Dutch names in the resource file `properties/nl.properties` for the same code lists as German, Spanish and French.
