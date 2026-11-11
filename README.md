@@ -195,10 +195,12 @@ mvn clean install
 
 # News and noteworthy
 
-v1.1.0 - work in progress
-* The code list enums no longer implement `IHasDisplayName` - `getDisplayName ()` was removed. Use `getDisplayText (Locale.ENGLISH)` instead
+v1.1.0 - 2026-11-11
+* The code list enums no longer implement `IHasDisplayName` - `getDisplayName ()` was removed.
+  Use `getDisplayText (Locale.ENGLISH)` instead
 * `getDisplayText (Locale)` of the code list enums returns `null` if there is no name in the language of the locale instead of falling back to the English name
-* Added `getDisplayTextOrEN (Locale)` to the translatable code list enums. It falls back to the English name and never returns `null`
+* Added `getDisplayTextOrEN (Locale)` to the translatable code list enums.
+  It falls back to the English name and never returns `null`
 
 v1.0.5 - 2026-11-11
 * Corrected 13 of the Spanish names in `properties/es.properties`, following the wording of the Spanish VAT act and the Spanish Commercial Code.
