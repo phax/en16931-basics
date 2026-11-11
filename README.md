@@ -125,7 +125,7 @@ helpers on top of them.
 
 Every enum with a name also offers `getDisplayText (Locale)`, which returns the name in the language of
 the locale and the English name if there is no translation (`getDisplayName ()` is always English).
-German, Spanish and French names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
+German, Spanish, Dutch and French names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
 names of the JDK; everything else is English only.
 
 Every one of them carries `getID()` — the code as spelled in the workbook — plus everything else the
