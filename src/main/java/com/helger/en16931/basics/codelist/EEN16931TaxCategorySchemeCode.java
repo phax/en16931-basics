@@ -25,7 +25,6 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.misc.Translatable;
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.name.IHasDisplayName;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.text.resolve.DefaultTextResolver;
@@ -45,24 +44,22 @@ import com.helger.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EEN16931TaxCategorySchemeCode implements IHasDisplayName, IHasDisplayText
+public enum EEN16931TaxCategorySchemeCode implements IHasDisplayText
 {
   /** UBL <code>VAT</code>, CII <code>VAT</code> - Value added tax */
   VAT ("VAT", "VAT", "Value added tax");
 
   private final String m_sUBLCode;
   private final String m_sCIICode;
-  private final String m_sDisplayName;
   private final IMultilingualText m_aTP;
 
   EEN16931TaxCategorySchemeCode (@NonNull @Nonempty final String sUBLCode,
                                  @NonNull @Nonempty final String sCIICode,
-                                 @NonNull @Nonempty final String sDisplayName)
+                                 @NonNull @Nonempty final String sDisplayNameEN)
   {
     m_sUBLCode = sUBLCode;
     m_sCIICode = sCIICode;
-    m_sDisplayName = sDisplayName;
-    m_aTP = TextHelper.create_EN (sDisplayName);
+    m_aTP = TextHelper.create_EN (sDisplayNameEN);
   }
 
   /**
@@ -85,16 +82,23 @@ public enum EEN16931TaxCategorySchemeCode implements IHasDisplayName, IHasDispla
     return m_sCIICode;
   }
 
-  @NonNull
-  @Nonempty
-  public String getDisplayName ()
+  /**
+   * Get the name of the code in the language of the passed locale.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language. May be <code>null</code>.
+   */
+  @Nullable
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
-    return m_sDisplayName;
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 
   /**
-   * Get the name of the code in the language of the passed locale. English is the fall back
-   * language.
+   * Get the name of the code in the language of the passed locale and fall back to the English name
+   * if there is no name in that language.
    *
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
@@ -103,11 +107,10 @@ public enum EEN16931TaxCategorySchemeCode implements IHasDisplayName, IHasDispla
    */
   @NonNull
   @Nonempty
-  public String getDisplayText (@NonNull final Locale aContentLocale)
+  public String getDisplayTextOrEN (@NonNull final Locale aContentLocale)
   {
-    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
-    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    return ret != null ? ret : m_sDisplayName;
+    final String ret = getDisplayText (aContentLocale);
+    return ret != null ? ret : getDisplayText (TextHelper.EN);
   }
 
   /**

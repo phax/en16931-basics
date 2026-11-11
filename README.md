@@ -124,7 +124,8 @@ helpers on top of them.
 | BT-158-1 | UNTDID 7143 Item type identification code | `EEN16931ItemTypeCode` |
 
 Every enum with a name also offers `getDisplayText (Locale)`, which returns the name in the language of
-the locale and the English name if there is no translation (`getDisplayName ()` is always English).
+the locale or `null` if there is no translation, and `getDisplayTextOrEN (Locale)`, which falls back to
+the English name instead.
 German, Spanish, Dutch and French names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
 names of the JDK; everything else is English only.
 
@@ -193,6 +194,11 @@ mvn clean install
 ```
 
 # News and noteworthy
+
+v1.1.0 - work in progress
+* The code list enums no longer implement `IHasDisplayName` - `getDisplayName ()` was removed. Use `getDisplayText (Locale.ENGLISH)` instead
+* `getDisplayText (Locale)` of the code list enums returns `null` if there is no name in the language of the locale instead of falling back to the English name
+* Added `getDisplayTextOrEN (Locale)` to the code list enums, which falls back to the English name if there is no name in the language of the locale
 
 v1.0.5 - 2026-11-11
 * Corrected 13 of the Spanish names in `properties/es.properties`, following the wording of the Spanish VAT act and the Spanish Commercial Code.

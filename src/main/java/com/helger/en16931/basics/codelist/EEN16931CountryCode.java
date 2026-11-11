@@ -28,7 +28,6 @@ import com.helger.annotation.misc.Translatable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
-import com.helger.base.name.IHasDisplayName;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.text.IMultilingualText;
@@ -52,7 +51,7 @@ import com.helger.text.util.TextHelper;
  */
 @Translatable
 @CodingStyleguideUnaware
-public enum EEN16931CountryCode implements IHasID <String>, IHasDisplayName, IHasDisplayText
+public enum EEN16931CountryCode implements IHasID <String>, IHasDisplayText
 {
   /** <code>AD</code> - Andorra */
   AD ("AD", "Andorra"),
@@ -566,14 +565,12 @@ public enum EEN16931CountryCode implements IHasID <String>, IHasDisplayName, IHa
   }
 
   private final String m_sID;
-  private final String m_sDisplayName;
   private final IMultilingualText m_aTP;
 
-  EEN16931CountryCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
+  EEN16931CountryCode (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayNameEN)
   {
     m_sID = sID;
-    m_sDisplayName = sDisplayName;
-    m_aTP = TextHelper.create_EN (sDisplayName);
+    m_aTP = TextHelper.create_EN (sDisplayNameEN);
   }
 
   /**
@@ -587,27 +584,14 @@ public enum EEN16931CountryCode implements IHasID <String>, IHasDisplayName, IHa
   }
 
   /**
-   * @return The name of the code as defined by the code list. Neither <code>null</code> nor empty.
-   */
-  @NonNull
-  @Nonempty
-  public String getDisplayName ()
-  {
-    return m_sDisplayName;
-  }
-
-  /**
-   * Get the name of the code in the language of the passed locale. English is the fall back
-   * language.
+   * Get the name of the code in the language of the passed locale.
    * The names of the countries are taken from the JDK if it knows them.
    *
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
-   * @return The name in the requested language or the English name. Neither <code>null</code> nor
-   *         empty.
+   * @return The name in the requested language. May be <code>null</code>.
    */
-  @NonNull
-  @Nonempty
+  @Nullable
   public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     ValueEnforcer.notNull (aContentLocale, "ContentLocale");
@@ -622,11 +606,27 @@ public enum EEN16931CountryCode implements IHasID <String>, IHasDisplayName, IHa
       }
       catch (final IllformedLocaleException ex)
       {
-        // Codes like "1A" are not known to the JDK - use the English name
+        // Codes like "1A" are not known to the JDK - use the text resolver
       }
     }
-    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    return ret != null ? ret : m_sDisplayName;
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+  }
+
+  /**
+   * Get the name of the code in the language of the passed locale and fall back to the English name
+   * if there is no name in that language.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language or the English name. Neither <code>null</code> nor
+   *         empty.
+   */
+  @NonNull
+  @Nonempty
+  public String getDisplayTextOrEN (@NonNull final Locale aContentLocale)
+  {
+    final String ret = getDisplayText (aContentLocale);
+    return ret != null ? ret : getDisplayText (TextHelper.EN);
   }
 
   /**

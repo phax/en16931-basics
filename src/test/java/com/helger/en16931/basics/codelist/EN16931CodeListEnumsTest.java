@@ -30,9 +30,9 @@ import java.util.function.Function;
 import org.junit.Test;
 
 import com.helger.base.id.IHasID;
-import com.helger.base.name.IHasDisplayName;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
+import com.helger.text.display.IHasDisplayText;
 
 /**
  * Test class for the code list enums generated from the EN 16931 code list workbook.
@@ -71,8 +71,8 @@ public final class EN16931CodeListEnumsTest
       assertTrue ("Code '" + sID + "' is contained twice", aCodes.add (sID));
       assertSame ("Code '" + sID + "' cannot be looked up", aValue, aLookup.apply (sID));
 
-      if (aValue instanceof final IHasDisplayName aDN)
-        assertTrue ("Code '" + sID + "' has no name", aDN.getDisplayName ().length () > 0);
+      if (aValue instanceof final IHasDisplayText aDT)
+        assertTrue ("Code '" + sID + "' has no name", aDT.getDisplayText (Locale.ENGLISH).length () > 0);
     }
 
     assertNull (aLookup.apply ("this-is-surely-not-a-code"));
@@ -105,7 +105,7 @@ public final class EN16931CodeListEnumsTest
   @Test
   public void testCountry ()
   {
-    assertEquals ("Germany", EEN16931CountryCode.DE.getDisplayName ());
+    assertEquals ("Germany", EEN16931CountryCode.DE.getDisplayText (Locale.ENGLISH));
     // The list is extended beyond ISO 3166-1
     assertNotNull (EEN16931CountryCode._1A);
     assertNotNull (EEN16931CountryCode.XI);
@@ -114,7 +114,7 @@ public final class EN16931CodeListEnumsTest
   @Test
   public void testCurrency ()
   {
-    assertEquals ("Euro", EEN16931CurrencyCode.EUR.getDisplayName ());
+    assertEquals ("Euro", EEN16931CurrencyCode.EUR.getDisplayText (Locale.ENGLISH));
     // Added in v17
     assertNotNull (EEN16931CurrencyCode.getFromIDOrNull ("XCG"));
     // Removed in v17, and ANG was only really removed in v17b
@@ -222,7 +222,7 @@ public final class EN16931CodeListEnumsTest
       assertNotNull (sCode, EEN16931PaymentMeansCode.getFromIDOrNull (sCode));
 
     assertEquals ("SEPA", EEN16931PaymentMeansCode._58.getUsage ());
-    assertEquals ("Instrument not defined", EEN16931PaymentMeansCode._1.getDisplayName ());
+    assertEquals ("Instrument not defined", EEN16931PaymentMeansCode._1.getDisplayText (Locale.ENGLISH));
     // Most codes carry no usage note
     assertNull (EEN16931PaymentMeansCode._1.getUsage ());
   }
@@ -231,10 +231,10 @@ public final class EN16931CodeListEnumsTest
   public void testTaxCategory ()
   {
     // The UNTDID name and the EN 16931 semantic model name differ in wording for some codes
-    assertEquals ("Standard rate", EEN16931TaxCategoryCode.S.getDisplayName ());
+    assertEquals ("Standard rate", EEN16931TaxCategoryCode.S.getDisplayText (Locale.ENGLISH));
     assertEquals ("Standard rate", EEN16931TaxCategoryCode.S.getSemanticModelName ());
     assertEquals ("Tax for production, services and importation in Ceuta and Melilla",
-                  EEN16931TaxCategoryCode.M.getDisplayName ());
+                  EEN16931TaxCategoryCode.M.getDisplayText (Locale.ENGLISH));
     assertEquals ("Liable for IPSI", EEN16931TaxCategoryCode.M.getSemanticModelName ());
   }
 

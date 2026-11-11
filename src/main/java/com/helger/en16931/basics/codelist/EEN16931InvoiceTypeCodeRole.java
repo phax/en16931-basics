@@ -27,7 +27,6 @@ import com.helger.annotation.misc.Translatable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-import com.helger.base.name.IHasDisplayName;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.text.resolve.DefaultTextResolver;
@@ -41,7 +40,7 @@ import com.helger.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayName, IHasDisplayText
+public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayText
 {
   /** The document type code identifies an Invoice */
   INVOICE ("invoice", "Invoice", "Rechnung"),
@@ -49,7 +48,6 @@ public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayN
   CREDIT_NOTE ("credit-note", "Credit Note", "Gutschrift");
 
   private final String m_sID;
-  private final String m_sDisplayName;
   private final IMultilingualText m_aTP;
 
   EEN16931InvoiceTypeCodeRole (@NonNull @Nonempty final String sID,
@@ -57,7 +55,6 @@ public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayN
                                @NonNull @Nonempty final String sDisplayNameDE)
   {
     m_sID = sID;
-    m_sDisplayName = sDisplayNameEN;
     m_aTP = TextHelper.create_DE_EN (sDisplayNameDE, sDisplayNameEN);
   }
 
@@ -69,19 +66,22 @@ public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayN
   }
 
   /**
-   * @return The name as spelled in the workbook, e.g. <code>Credit Note</code>. Neither
-   *         <code>null</code> nor empty.
+   * Get the name of the role in the language of the passed locale.
+   *
+   * @param aContentLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @return The name in the requested language. May be <code>null</code>.
    */
-  @NonNull
-  @Nonempty
-  public String getDisplayName ()
+  @Nullable
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
-    return m_sDisplayName;
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 
   /**
-   * Get the name of the role in the language of the passed locale. English is the fall back
-   * language.
+   * Get the name of the role in the language of the passed locale and fall back to the English name
+   * if there is no name in that language.
    *
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
@@ -90,11 +90,10 @@ public enum EEN16931InvoiceTypeCodeRole implements IHasID <String>, IHasDisplayN
    */
   @NonNull
   @Nonempty
-  public String getDisplayText (@NonNull final Locale aContentLocale)
+  public String getDisplayTextOrEN (@NonNull final Locale aContentLocale)
   {
-    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
-    final String ret = DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    return ret != null ? ret : m_sDisplayName;
+    final String ret = getDisplayText (aContentLocale);
+    return ret != null ? ret : getDisplayText (TextHelper.EN);
   }
 
   @Nullable

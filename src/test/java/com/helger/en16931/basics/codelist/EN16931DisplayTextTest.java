@@ -20,6 +20,7 @@ package com.helger.en16931.basics.codelist;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Locale;
 
@@ -68,10 +69,12 @@ public final class EN16931DisplayTextTest
     assertEquals ("Factura comercial", EEN16931InvoiceTypeCode._380.getDisplayText (SPANISH));
     for (final EEN16931InvoiceTypeCode e : EEN16931InvoiceTypeCode.values ())
     {
-      assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (Locale.GERMAN));
-      assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (DUTCH));
-      assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (Locale.FRENCH));
-      assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (SPANISH));
+      final String sEN = e.getDisplayText (Locale.ENGLISH);
+      assertNotNull (e.getID (), sEN);
+      assertNotEquals (e.getID (), sEN, e.getDisplayText (Locale.GERMAN));
+      assertNotEquals (e.getID (), sEN, e.getDisplayText (DUTCH));
+      assertNotEquals (e.getID (), sEN, e.getDisplayText (Locale.FRENCH));
+      assertNotEquals (e.getID (), sEN, e.getDisplayText (SPANISH));
     }
   }
 
@@ -93,22 +96,33 @@ public final class EN16931DisplayTextTest
   @Test
   public void testEnglishIsTheFallBack ()
   {
-    for (final Locale aLocale : new Locale [] { Locale.ENGLISH, Locale.US, Locale.ITALIAN, Locale.ROOT })
+    for (final Locale aLocale : new Locale [] { Locale.ENGLISH, Locale.US })
     {
       assertEquals ("Standard rate", EEN16931TaxCategoryCode.S.getDisplayText (aLocale));
       assertEquals ("SEPA credit transfer", EEN16931PaymentMeansCode._58.getDisplayText (aLocale));
     }
-    assertEquals ("Commercial invoice", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.ITALIAN));
+    // Languages without a translation
+    for (final Locale aLocale : new Locale [] { Locale.ITALIAN, Locale.ROOT })
+    {
+      assertNull (EEN16931TaxCategoryCode.S.getDisplayText (aLocale));
+      assertEquals ("Standard rate", EEN16931TaxCategoryCode.S.getDisplayTextOrEN (aLocale));
+      assertNull (EEN16931PaymentMeansCode._58.getDisplayText (aLocale));
+      assertEquals ("SEPA credit transfer", EEN16931PaymentMeansCode._58.getDisplayTextOrEN (aLocale));
+    }
+    assertNull (EEN16931InvoiceTypeCode._380.getDisplayText (Locale.ITALIAN));
+    assertEquals ("Commercial invoice", EEN16931InvoiceTypeCode._380.getDisplayTextOrEN (Locale.ITALIAN));
     // Code lists without a translation
-    assertEquals (EEN16931AllowanceReasonCode._100.getDisplayName (),
-                  EEN16931AllowanceReasonCode._100.getDisplayText (Locale.GERMAN));
-    assertEquals (EEN16931AllowanceReasonCode._100.getDisplayName (),
-                  EEN16931AllowanceReasonCode._100.getDisplayText (Locale.FRENCH));
-    assertEquals (EEN16931AllowanceReasonCode._100.getDisplayName (),
-                  EEN16931AllowanceReasonCode._100.getDisplayText (SPANISH));
+    assertNull (EEN16931AllowanceReasonCode._100.getDisplayText (Locale.GERMAN));
+    assertNull (EEN16931AllowanceReasonCode._100.getDisplayText (Locale.FRENCH));
+    assertNull (EEN16931AllowanceReasonCode._100.getDisplayText (SPANISH));
+    assertEquals ("Special rebate", EEN16931AllowanceReasonCode._100.getDisplayTextOrEN (Locale.GERMAN));
+    assertEquals ("Special rebate", EEN16931AllowanceReasonCode._100.getDisplayTextOrEN (Locale.FRENCH));
+    assertEquals ("Special rebate", EEN16931AllowanceReasonCode._100.getDisplayTextOrEN (SPANISH));
     // Payment means without a translation
-    assertEquals (EEN16931PaymentMeansCode._1.getDisplayName (),
-                  EEN16931PaymentMeansCode._1.getDisplayText (Locale.FRENCH));
+    assertNull (EEN16931PaymentMeansCode._1.getDisplayText (Locale.FRENCH));
+    assertEquals ("Instrument not defined", EEN16931PaymentMeansCode._1.getDisplayTextOrEN (Locale.FRENCH));
+    // A translation is preferred over the English name
+    assertEquals ("Regelsteuersatz", EEN16931TaxCategoryCode.S.getDisplayTextOrEN (Locale.GERMAN));
   }
 
   @Test
@@ -119,10 +133,10 @@ public final class EN16931DisplayTextTest
     assertEquals ("Euro", EEN16931CurrencyCode.EUR.getDisplayText (Locale.GERMAN));
     // Codes of EN 16931 that are no ISO 3166-1 codes
     assertNotNull (EEN16931CountryCode.getFromIDOrNull ("XI"));
-    assertEquals (EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayName (),
-                  EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayText (Locale.GERMAN));
-    assertEquals (EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayName (),
-                  EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayText (Locale.GERMAN));
+    assertEquals (EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayText (Locale.ENGLISH),
+                  EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayTextOrEN (Locale.GERMAN));
+    assertEquals (EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayText (Locale.ENGLISH),
+                  EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayTextOrEN (Locale.GERMAN));
   }
 
   @Test
