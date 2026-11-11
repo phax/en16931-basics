@@ -194,6 +194,10 @@ mvn clean install
 
 # News and noteworthy
 
+v1.0.5 - work in progress
+* Corrected 13 of the Spanish names in `properties/es.properties`, following the wording of the Spanish VAT act and the Spanish Commercial Code. See [PR #1](https://github.com/phax/en16931-basics/pull/1) - thanks to @greedwhale
+* Added Dutch names in the resource file `properties/nl.properties` for the same code lists as German, Spanish and French. See [PR #2](https://github.com/phax/en16931-basics/pull/2) - thanks to @Karting06
+
 v1.0.4 - 2026-11-03
 * Added `EEN16931DutyTaxFeeTypeCode`, the code list UNTDID 5153 (D24A) of BT-177 and BT-193
 * Fixed `EEN16931DateFormatCode.YYWWD` (format `103`): the value has 5 digits as UNTDID 2379 defines, not 6, so values could not be parsed and writing produced a wrong value.
