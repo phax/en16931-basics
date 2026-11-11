@@ -94,6 +94,12 @@ becomes a constant with a leading underscore (`_0002`, `_10`). The three sheets 
 with a different CII code - `Time`, `VAT ID`, `VAT CAT` - carry both codes and offer
 `getUBLCode()` / `getCIICode()` instead of `getID()`.
 
+Every enum with a name is `@Translatable` and implements `IHasDisplayText`, not `IHasDisplayName`.
+`getDisplayText (Locale)` returns `null` if there is no name in the language of the locale;
+`getDisplayTextOrEN (Locale)` is the `@NonNull` API that falls back to the English name. That only
+works because **every code of such an enum must have an English name** - an enum whose codes may
+lack a name must not offer `getDisplayTextOrEN`.
+
 `EN16931CodeLists` keeps the classifying helpers and **derives** `INVOICE_TYPE_CODES`,
 `CREDIT_NOTE_TYPE_CODES` and both the BT-8 and the BT-31/BT-48/BT-63 mappings from the enums, so no
 value is written down twice.

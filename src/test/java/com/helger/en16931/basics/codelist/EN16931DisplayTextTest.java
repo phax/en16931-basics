@@ -94,7 +94,7 @@ public final class EN16931DisplayTextTest
   }
 
   @Test
-  public void testEnglishIsTheFallBack ()
+  public void testMissingTranslation ()
   {
     for (final Locale aLocale : new Locale [] { Locale.ENGLISH, Locale.US })
     {
@@ -133,10 +133,24 @@ public final class EN16931DisplayTextTest
     assertEquals ("Euro", EEN16931CurrencyCode.EUR.getDisplayText (Locale.GERMAN));
     // Codes of EN 16931 that are no ISO 3166-1 codes
     assertNotNull (EEN16931CountryCode.getFromIDOrNull ("XI"));
+    assertNull (EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayText (Locale.GERMAN));
+    assertNull (EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayText (Locale.GERMAN));
     assertEquals (EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayText (Locale.ENGLISH),
                   EEN16931CountryCode.getFromIDOrNull ("XI").getDisplayTextOrEN (Locale.GERMAN));
     assertEquals (EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayText (Locale.ENGLISH),
                   EEN16931CountryCode.getFromIDOrNull ("1A").getDisplayTextOrEN (Locale.GERMAN));
+  }
+
+  @Test
+  public void testEveryCodeHasAnEnglishName ()
+  {
+    // The enums with an ID are covered by EN16931CodeListEnumsTest
+    for (final EEN16931TaxSchemeCode e : EEN16931TaxSchemeCode.values ())
+      assertEquals (e.getDisplayText (Locale.ENGLISH), e.getDisplayTextOrEN (Locale.ITALIAN));
+    for (final EEN16931TaxCategorySchemeCode e : EEN16931TaxCategorySchemeCode.values ())
+      assertEquals (e.getDisplayText (Locale.ENGLISH), e.getDisplayTextOrEN (Locale.ITALIAN));
+    for (final EEN16931AllowanceReasonCode e : EEN16931AllowanceReasonCode.values ())
+      assertNotNull (e.getDisplayTextOrEN (Locale.ROOT));
   }
 
   @Test
