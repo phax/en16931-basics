@@ -195,6 +195,9 @@ mvn clean install
 
 # News and noteworthy
 
+v1.1.1 - work in progress
+* Updated to ph-commons 12.7.1, imported via `ph-commons-bom` instead of `ph-commons-parent-pom`
+
 v1.1.0 - 2026-11-11
 * The code list enums no longer implement `IHasDisplayName` - `getDisplayName ()` was removed.
   Use `getDisplayText (Locale.ENGLISH)` instead
